@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<root>
+
+<sentencias>
+
+    <tempresa>
+        SELECT * FROM empresa
+    </tempresa>
+
+    <tevento>
+        SELECT * FROM evento
+    </tevento>
+
+    <tpersona>
+        SELECT * FROM persona
+    </tpersona>
+
+    <tasistencia>
+        SELECT * FROM asistencia
+    </tasistencia>
+
+    <crevento>
+        CREATE TABLE evento (
+        nombre varchar(255) NOT NULL,
+        lugar varchar(255) NOT NULL,
+        aforo int(9) NOT NULL,
+        fecha date NOT NULL,
+        horai time NOT NULL,
+        horaf time NOT NULL,
+        cod int(5) NOT NULL AUTO_INCREMENT,
+        PRIMARY KEY (cod),
+        UNIQUE KEY nombre (nombre)
+        ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4
+    </crevento>
+
+    <crempresa>
+        CREATE TABLE empresa (
+        CIF varchar(9) NOT NULL,
+        Nombre varchar(30) NOT NULL,
+        Direccion varchar(90) NOT NULL,
+        Telefono varchar(15) NOT NULL,
+        PRIMARY KEY (CIF)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    </crempresa>
+
+    <crpersona>
+        CREATE TABLE persona (
+	    DNI varchar(9) NOT NULL,
+	    Nombre varchar(30) NOT NULL,
+	    Apellidos varchar(60) NOT NULL,
+	    Direccion varchar(90) NOT NULL,
+	    Telefono varchar(15) NOT NULL,
+	    Edad int(3) NOT NULL,
+	    CIF varchar(9) NOT NULL,
+	    PRIMARY KEY (DNI),
+	    KEY CIF (CIF)
+  	    ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+    </crpersona>
+
+    <crpersonar>
+		ALTER TABLE  persona ADD CONSTRAINT persona_ibfk_2 FOREIGN KEY (CIF) REFERENCES empresa (CIF) ON DELETE CASCADE ON UPDATE CASCADE
+    </crpersonar>
+
+    <crasistencia>
+        CREATE TABLE asistencia (
+        id int(15) NOT NULL AUTO_INCREMENT,
+        idevento int(5) NOT NULL,
+        idpersona varchar(9) NOT NULL,
+        PRIMARY KEY (id),
+        KEY idevento (idevento),
+        KEY idpersona (idpersona)
+        ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14
+    </crasistencia>
+
+    <crasistenciar>
+        ALTER TABLE  asistencia ADD FOREIGN KEY (idevento) REFERENCES t8e1.evento (cod) ON DELETE CASCADE ON UPDATE CASCADE
+    </crasistenciar>
+
+    <crasistenciarr>
+        ALTER TABLE  asistencia ADD FOREIGN KEY (  idpersona ) REFERENCES  t8e1.persona (DNI) ON DELETE CASCADE ON UPDATE CASCADE
+    </crasistenciarr>
+
+    <creartabla>
+        CREATE DATABASE IF NOT EXISTS t8e1
+    </creartabla>
+
+    <cpdni>
+        SELECT * FROM persona where DNI = ?
+    </cpdni>
+
+    <apersona>
+        INSERT INTO persona VALUES ( ?, ?, ?, ?, ?, ?, ?)
+    </apersona>
+
+    <eevento>
+        DELETE FROM evento WHERE nombre = ?
+    </eevento>
+
+    <mevento>
+        UPDATE evento SET lugar = ?, aforo = ?, fecha = ?, horai = ?, horaf = ? WHERE nombre = ?
+    </mevento>
+
+    <aevento>
+        INSERT INTO evento VALUES (?, ?, ?, ?, ?, ?, NULL)
+    </aevento>
+
+    <cevento>
+        SELECT * FROM evento where nombre = ?
+    </cevento>
+
+    <cempresa>
+        SELECT * FROM empresa where CIF = ?
+    </cempresa>
+
+    <aempresa>
+        INSERT INTO empresa VALUES (?, ?, ?, ?)
+    </aempresa>
+
+    <asignarevento>
+        INSERT INTO asistencia VALUES (null , ?, ?)
+    </asignarevento>
+
+    <plazasevento>
+        SELECT COUNT(idevento) as contador FROM asistencia where idevento = ?
+    </plazasevento>
+
+    <apuntar>
+        SELECT * FROM asistencia where idevento = ? and idpersona = ?
+    </apuntar>
+
+	<listado>
+        SELECT evento.nombre as evento, asistencia.idpersona as dni, persona.nombre
+        FROM asistencia
+        INNER JOIN persona on persona.dni = asistencia.idpersona
+        INNER JOIN evento on evento.cod = asistencia.idevento
+    </listado>
+	
+</sentencias>
+</root>

@@ -19,6 +19,7 @@ import javax.swing.*;
  */
 public class Main {
 
+    
     public static Evento ev;
     public static Empresa em;
     public static Persona p;

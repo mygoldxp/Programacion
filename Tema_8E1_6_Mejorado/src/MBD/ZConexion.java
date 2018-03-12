@@ -7,7 +7,6 @@ package MBD;
 
 import Controladora.Main;
 import java.sql.*;
-import javax.swing.JOptionPane;
 /**
  *
  * @author v6222
@@ -26,6 +25,7 @@ public class ZConexion {
     public ZConexion() throws Exception{
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            //Class.forName("oracle.jdbc.Driver");
             try {
 		connection = DriverManager.getConnection(url+bd, usuario, contraseña);
                 

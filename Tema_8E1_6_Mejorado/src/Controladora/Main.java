@@ -20,16 +20,16 @@ import javax.swing.*;
 public class Main {
 
     
-    public static Evento ev;
-    public static Empresa em;
-    public static Persona p;
-    public static EventoBBDD eventoBBDD;
-    public static EmpresaBBDD empresaBBDD;
-    public static PersonaBBDD personaBBDD;
-    public static AsistirBBDD asistirBBDD;
-    public static ArrayList <Evento> listadoEvento;
-    public static String bd, usuario, contraseña, url;
-    public static int n = 0;
+    private static Evento ev;
+    private static Empresa em;
+    private static Persona p;
+    private static EventoBBDD eventoBBDD;
+    private static EmpresaBBDD empresaBBDD;
+    private static PersonaBBDD personaBBDD;
+    private static AsistirBBDD asistirBBDD;
+    private static ArrayList <Evento> listadoEvento;
+    private static String bd, usuario, contraseña, url;
+    private static int n = 0;
     /**
      * @param args the command line arguments
      */
@@ -146,4 +146,54 @@ public class Main {
         v.dispose();
         System.exit(0);
     }
+
+    public static Empresa getEm() {
+        return em;
+    }
+
+    public static void setEm(Empresa em) {
+        Main.em = em;
+    }
+
+    public static Persona getP() {
+        return p;
+    }
+
+    public static void setP(Persona p) {
+        Main.p = p;
+    }
+
+    public static String getBd() {
+        return bd;
+    }
+
+    public static void setBd(String bd) {
+        Main.bd = bd;
+    }
+
+    public static String getUsuario() {
+        return usuario;
+    }
+
+    public static void setUsuario(String usuario) {
+        Main.usuario = usuario;
+    }
+
+    public static String getContraseña() {
+        return contraseña;
+    }
+
+    public static void setContraseña(String contraseña) {
+        Main.contraseña = contraseña;
+    }
+
+    public static String getUrl() {
+        return url;
+    }
+
+    public static void setUrl(String url) {
+        Main.url = url;
+    }
+    
+    
 }

@@ -29,6 +29,7 @@ public class AbogadosJpaController implements Serializable {
     public AbogadosJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
+    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {

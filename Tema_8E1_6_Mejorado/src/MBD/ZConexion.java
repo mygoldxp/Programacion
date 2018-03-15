@@ -13,10 +13,10 @@ import java.sql.*;
  */
 public class ZConexion {
     
-    String bd = Main.bd;
-    String usuario = Main.usuario;
-    String contraseña = Main.contraseña;
-    String url = Main.url;
+    String bd = Main.getBd();
+    String usuario = Main.getUsuario();
+    String contraseña = Main.getContraseña();
+    String url = Main.getUrl();
     
     Connection connection;
  

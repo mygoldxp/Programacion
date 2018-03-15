@@ -45,8 +45,8 @@ public class PersonaBBDD {
         sentencia.close();
         con.desconectar();
         
-        Main.em = e;
-        Main.p = p;
+        Main.setEm(e);
+        Main.setP(p);
         return cont;
     }
     

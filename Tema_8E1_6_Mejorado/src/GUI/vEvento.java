@@ -792,8 +792,8 @@ public class vEvento extends javax.swing.JDialog {
                 enComun(true);
             }
             else{
-                Persona p = Main.p;
-                if(tCIF.getText().equals(Main.em.getCif())){
+                Persona p = Main.getP();
+                if(tCIF.getText().equals(Main.getEm().getCif())){
                     tNombre.setText(p.getNombre());
                     tApellidos.setText(p.getApellidos());
                     tDireccion.setText(p.getDireccion());

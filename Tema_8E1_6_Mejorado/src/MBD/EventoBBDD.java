@@ -98,8 +98,8 @@ public class EventoBBDD {
         sentencia.setString(2, ev.getLugar());
         sentencia.setInt(3, ev.getAforo());
         sentencia.setDate(4, (Date) ev.getFecha());
-        sentencia.setTime(5, fHora(ev.gethEntrada()));
-        sentencia.setTime(6, fHora(ev.gethSalida()));
+        sentencia.setTime(5, Time.valueOf(ev.gethEntrada()));
+        sentencia.setTime(6, Time.valueOf(ev.gethSalida()));
         
         sentencia.executeUpdate();
 
@@ -116,8 +116,8 @@ public class EventoBBDD {
         sentencia.setString(1, ev.getLugar());
         sentencia.setInt(2, ev.getAforo());
         sentencia.setDate(3, (Date) ev.getFecha());
-        sentencia.setTime(4, fHora(ev.gethEntrada()));
-        sentencia.setTime(5, fHora(ev.gethSalida()));
+        sentencia.setTime(4, Time.valueOf(ev.gethEntrada()));
+        sentencia.setTime(5, Time.valueOf(ev.gethSalida()));
         sentencia.setString(6, ev.getNombre());
         
         sentencia.executeUpdate();
@@ -137,12 +137,6 @@ public class EventoBBDD {
 
         sentencia.close();
         con.desconectar();
-    }
-
-    public Time fHora(java.time.LocalTime dato){
-        java.sql.Time hora;
-        hora = Time.valueOf(dato);
-        return hora;
     }
 
 }

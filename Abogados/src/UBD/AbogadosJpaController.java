@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import UML.Casos;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,23 +36,23 @@ public class AbogadosJpaController implements Serializable {
     }
 
     public void create(Abogados abogados) throws PreexistingEntityException, Exception {
-        if (abogados.getCasosList() == null) {
-            abogados.setCasosList(new ArrayList<Casos>());
+        if (abogados.getCasosCollection() == null) {
+            abogados.setCasosCollection(new ArrayList<Casos>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Casos> attachedCasosList = new ArrayList<Casos>();
-            for (Casos casosListCasosToAttach : abogados.getCasosList()) {
-                casosListCasosToAttach = em.getReference(casosListCasosToAttach.getClass(), casosListCasosToAttach.getNumExp());
-                attachedCasosList.add(casosListCasosToAttach);
+            Collection<Casos> attachedCasosCollection = new ArrayList<Casos>();
+            for (Casos casosCollectionCasosToAttach : abogados.getCasosCollection()) {
+                casosCollectionCasosToAttach = em.getReference(casosCollectionCasosToAttach.getClass(), casosCollectionCasosToAttach.getNumExp());
+                attachedCasosCollection.add(casosCollectionCasosToAttach);
             }
-            abogados.setCasosList(attachedCasosList);
+            abogados.setCasosCollection(attachedCasosCollection);
             em.persist(abogados);
-            for (Casos casosListCasos : abogados.getCasosList()) {
-                casosListCasos.getAbogadosList().add(abogados);
-                casosListCasos = em.merge(casosListCasos);
+            for (Casos casosCollectionCasos : abogados.getCasosCollection()) {
+                casosCollectionCasos.getAbogadosCollection().add(abogados);
+                casosCollectionCasos = em.merge(casosCollectionCasos);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -72,26 +73,26 @@ public class AbogadosJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Abogados persistentAbogados = em.find(Abogados.class, abogados.getDni());
-            List<Casos> casosListOld = persistentAbogados.getCasosList();
-            List<Casos> casosListNew = abogados.getCasosList();
-            List<Casos> attachedCasosListNew = new ArrayList<Casos>();
-            for (Casos casosListNewCasosToAttach : casosListNew) {
-                casosListNewCasosToAttach = em.getReference(casosListNewCasosToAttach.getClass(), casosListNewCasosToAttach.getNumExp());
-                attachedCasosListNew.add(casosListNewCasosToAttach);
+            Collection<Casos> casosCollectionOld = persistentAbogados.getCasosCollection();
+            Collection<Casos> casosCollectionNew = abogados.getCasosCollection();
+            Collection<Casos> attachedCasosCollectionNew = new ArrayList<Casos>();
+            for (Casos casosCollectionNewCasosToAttach : casosCollectionNew) {
+                casosCollectionNewCasosToAttach = em.getReference(casosCollectionNewCasosToAttach.getClass(), casosCollectionNewCasosToAttach.getNumExp());
+                attachedCasosCollectionNew.add(casosCollectionNewCasosToAttach);
             }
-            casosListNew = attachedCasosListNew;
-            abogados.setCasosList(casosListNew);
+            casosCollectionNew = attachedCasosCollectionNew;
+            abogados.setCasosCollection(casosCollectionNew);
             abogados = em.merge(abogados);
-            for (Casos casosListOldCasos : casosListOld) {
-                if (!casosListNew.contains(casosListOldCasos)) {
-                    casosListOldCasos.getAbogadosList().remove(abogados);
-                    casosListOldCasos = em.merge(casosListOldCasos);
+            for (Casos casosCollectionOldCasos : casosCollectionOld) {
+                if (!casosCollectionNew.contains(casosCollectionOldCasos)) {
+                    casosCollectionOldCasos.getAbogadosCollection().remove(abogados);
+                    casosCollectionOldCasos = em.merge(casosCollectionOldCasos);
                 }
             }
-            for (Casos casosListNewCasos : casosListNew) {
-                if (!casosListOld.contains(casosListNewCasos)) {
-                    casosListNewCasos.getAbogadosList().add(abogados);
-                    casosListNewCasos = em.merge(casosListNewCasos);
+            for (Casos casosCollectionNewCasos : casosCollectionNew) {
+                if (!casosCollectionOld.contains(casosCollectionNewCasos)) {
+                    casosCollectionNewCasos.getAbogadosCollection().add(abogados);
+                    casosCollectionNewCasos = em.merge(casosCollectionNewCasos);
                 }
             }
             em.getTransaction().commit();
@@ -123,10 +124,10 @@ public class AbogadosJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The abogados with id " + id + " no longer exists.", enfe);
             }
-            List<Casos> casosList = abogados.getCasosList();
-            for (Casos casosListCasos : casosList) {
-                casosListCasos.getAbogadosList().remove(abogados);
-                casosListCasos = em.merge(casosListCasos);
+            Collection<Casos> casosCollection = abogados.getCasosCollection();
+            for (Casos casosCollectionCasos : casosCollection) {
+                casosCollectionCasos.getAbogadosCollection().remove(abogados);
+                casosCollectionCasos = em.merge(casosCollectionCasos);
             }
             em.remove(abogados);
             em.getTransaction().commit();

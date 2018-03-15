@@ -6,7 +6,7 @@
 package UML;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +57,7 @@ public class Abogados implements Serializable {
         @JoinColumn(name = "Abogado_dni", referencedColumnName = "dni")}, inverseJoinColumns = {
         @JoinColumn(name = "Caso_expediente", referencedColumnName = "num_exp")})
     @ManyToMany
-    private List<Casos> casosList;
+    private Collection<Casos> casosCollection;
 
     public Abogados() {
     }
@@ -115,12 +115,12 @@ public class Abogados implements Serializable {
     }
 
     @XmlTransient
-    public List<Casos> getCasosList() {
-        return casosList;
+    public Collection<Casos> getCasosCollection() {
+        return casosCollection;
     }
 
-    public void setCasosList(List<Casos> casosList) {
-        this.casosList = casosList;
+    public void setCasosCollection(Collection<Casos> casosCollection) {
+        this.casosCollection = casosCollection;
     }
 
     @Override

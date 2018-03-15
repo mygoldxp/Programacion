@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.sql.Time;
 
 /**
  *
@@ -52,8 +54,8 @@ public class EventoBBDD {
             ev.setLugar(rs.getString("Lugar"));
             ev.setAforo(rs.getInt("Aforo"));
             ev.setFecha(rs.getDate("Fecha"));
-            ev.sethEntrada(rs.getTime("HoraI"));
-            ev.sethSalida(rs.getTime("HoraF"));
+            ev.sethEntrada(rs.getTime("HoraI").toLocalTime());
+            ev.sethSalida(rs.getTime("HoraF").toLocalTime());
         }
         rs.close();
         sentencia.close();
@@ -76,8 +78,8 @@ public class EventoBBDD {
             ev.setLugar(rs.getString("Lugar"));
             ev.setAforo(rs.getInt("Aforo"));
             ev.setFecha(rs.getDate("Fecha"));
-            ev.sethEntrada(rs.getTime("HoraI"));
-            ev.sethSalida(rs.getTime("HoraF"));
+            ev.sethEntrada(rs.getTime("HoraI").toLocalTime());
+            ev.sethSalida(rs.getTime("HoraF").toLocalTime());
             listado.add(ev);
         }
         
@@ -95,9 +97,9 @@ public class EventoBBDD {
         sentencia.setString(1, ev.getNombre());
         sentencia.setString(2, ev.getLugar());
         sentencia.setInt(3, ev.getAforo());
-        sentencia.setDate(4, ev.getFecha());
-        sentencia.setTime(5, ev.gethEntrada());
-        sentencia.setTime(6, ev.gethSalida());
+        sentencia.setDate(4, (Date) ev.getFecha());
+        sentencia.setTime(5, fHora(ev.gethEntrada()));
+        sentencia.setTime(6, fHora(ev.gethSalida()));
         
         sentencia.executeUpdate();
 
@@ -113,9 +115,9 @@ public class EventoBBDD {
         
         sentencia.setString(1, ev.getLugar());
         sentencia.setInt(2, ev.getAforo());
-        sentencia.setDate(3, ev.getFecha());
-        sentencia.setTime(4, ev.gethEntrada());
-        sentencia.setTime(5, ev.gethSalida());
+        sentencia.setDate(3, (Date) ev.getFecha());
+        sentencia.setTime(4, fHora(ev.gethEntrada()));
+        sentencia.setTime(5, fHora(ev.gethSalida()));
         sentencia.setString(6, ev.getNombre());
         
         sentencia.executeUpdate();
@@ -135,6 +137,12 @@ public class EventoBBDD {
 
         sentencia.close();
         con.desconectar();
+    }
+
+    public Time fHora(java.time.LocalTime dato){
+        java.sql.Time hora;
+        hora = Time.valueOf(dato);
+        return hora;
     }
 
 }

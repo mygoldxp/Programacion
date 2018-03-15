@@ -6,8 +6,8 @@
 package UML;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,8 +53,8 @@ public class Casos implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
-    @ManyToMany(mappedBy = "casosList")
-    private List<Abogados> abogadosList;
+    @ManyToMany(mappedBy = "casosCollection")
+    private Collection<Abogados> abogadosCollection;
     @JoinColumn(name = "Cliente_dni", referencedColumnName = "dni")
     @ManyToOne(optional = false)
     private Clientes clientedni;
@@ -105,12 +105,12 @@ public class Casos implements Serializable {
     }
 
     @XmlTransient
-    public List<Abogados> getAbogadosList() {
-        return abogadosList;
+    public Collection<Abogados> getAbogadosCollection() {
+        return abogadosCollection;
     }
 
-    public void setAbogadosList(List<Abogados> abogadosList) {
-        this.abogadosList = abogadosList;
+    public void setAbogadosCollection(Collection<Abogados> abogadosCollection) {
+        this.abogadosCollection = abogadosCollection;
     }
 
     public Clientes getClientedni() {

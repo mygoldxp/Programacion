@@ -16,6 +16,7 @@ import UML.Clientes;
 import UML.Abogados;
 import UML.Casos;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,8 +37,8 @@ public class CasosJpaController implements Serializable {
     }
 
     public void create(Casos casos) throws PreexistingEntityException, Exception {
-        if (casos.getAbogadosList() == null) {
-            casos.setAbogadosList(new ArrayList<Abogados>());
+        if (casos.getAbogadosCollection() == null) {
+            casos.setAbogadosCollection(new ArrayList<Abogados>());
         }
         EntityManager em = null;
         try {
@@ -48,20 +49,20 @@ public class CasosJpaController implements Serializable {
                 clientedni = em.getReference(clientedni.getClass(), clientedni.getDni());
                 casos.setClientedni(clientedni);
             }
-            List<Abogados> attachedAbogadosList = new ArrayList<Abogados>();
-            for (Abogados abogadosListAbogadosToAttach : casos.getAbogadosList()) {
-                abogadosListAbogadosToAttach = em.getReference(abogadosListAbogadosToAttach.getClass(), abogadosListAbogadosToAttach.getDni());
-                attachedAbogadosList.add(abogadosListAbogadosToAttach);
+            Collection<Abogados> attachedAbogadosCollection = new ArrayList<Abogados>();
+            for (Abogados abogadosCollectionAbogadosToAttach : casos.getAbogadosCollection()) {
+                abogadosCollectionAbogadosToAttach = em.getReference(abogadosCollectionAbogadosToAttach.getClass(), abogadosCollectionAbogadosToAttach.getDni());
+                attachedAbogadosCollection.add(abogadosCollectionAbogadosToAttach);
             }
-            casos.setAbogadosList(attachedAbogadosList);
+            casos.setAbogadosCollection(attachedAbogadosCollection);
             em.persist(casos);
             if (clientedni != null) {
-                clientedni.getCasosList().add(casos);
+                clientedni.getCasosCollection().add(casos);
                 clientedni = em.merge(clientedni);
             }
-            for (Abogados abogadosListAbogados : casos.getAbogadosList()) {
-                abogadosListAbogados.getCasosList().add(casos);
-                abogadosListAbogados = em.merge(abogadosListAbogados);
+            for (Abogados abogadosCollectionAbogados : casos.getAbogadosCollection()) {
+                abogadosCollectionAbogados.getCasosCollection().add(casos);
+                abogadosCollectionAbogados = em.merge(abogadosCollectionAbogados);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -84,38 +85,38 @@ public class CasosJpaController implements Serializable {
             Casos persistentCasos = em.find(Casos.class, casos.getNumExp());
             Clientes clientedniOld = persistentCasos.getClientedni();
             Clientes clientedniNew = casos.getClientedni();
-            List<Abogados> abogadosListOld = persistentCasos.getAbogadosList();
-            List<Abogados> abogadosListNew = casos.getAbogadosList();
+            Collection<Abogados> abogadosCollectionOld = persistentCasos.getAbogadosCollection();
+            Collection<Abogados> abogadosCollectionNew = casos.getAbogadosCollection();
             if (clientedniNew != null) {
                 clientedniNew = em.getReference(clientedniNew.getClass(), clientedniNew.getDni());
                 casos.setClientedni(clientedniNew);
             }
-            List<Abogados> attachedAbogadosListNew = new ArrayList<Abogados>();
-            for (Abogados abogadosListNewAbogadosToAttach : abogadosListNew) {
-                abogadosListNewAbogadosToAttach = em.getReference(abogadosListNewAbogadosToAttach.getClass(), abogadosListNewAbogadosToAttach.getDni());
-                attachedAbogadosListNew.add(abogadosListNewAbogadosToAttach);
+            Collection<Abogados> attachedAbogadosCollectionNew = new ArrayList<Abogados>();
+            for (Abogados abogadosCollectionNewAbogadosToAttach : abogadosCollectionNew) {
+                abogadosCollectionNewAbogadosToAttach = em.getReference(abogadosCollectionNewAbogadosToAttach.getClass(), abogadosCollectionNewAbogadosToAttach.getDni());
+                attachedAbogadosCollectionNew.add(abogadosCollectionNewAbogadosToAttach);
             }
-            abogadosListNew = attachedAbogadosListNew;
-            casos.setAbogadosList(abogadosListNew);
+            abogadosCollectionNew = attachedAbogadosCollectionNew;
+            casos.setAbogadosCollection(abogadosCollectionNew);
             casos = em.merge(casos);
             if (clientedniOld != null && !clientedniOld.equals(clientedniNew)) {
-                clientedniOld.getCasosList().remove(casos);
+                clientedniOld.getCasosCollection().remove(casos);
                 clientedniOld = em.merge(clientedniOld);
             }
             if (clientedniNew != null && !clientedniNew.equals(clientedniOld)) {
-                clientedniNew.getCasosList().add(casos);
+                clientedniNew.getCasosCollection().add(casos);
                 clientedniNew = em.merge(clientedniNew);
             }
-            for (Abogados abogadosListOldAbogados : abogadosListOld) {
-                if (!abogadosListNew.contains(abogadosListOldAbogados)) {
-                    abogadosListOldAbogados.getCasosList().remove(casos);
-                    abogadosListOldAbogados = em.merge(abogadosListOldAbogados);
+            for (Abogados abogadosCollectionOldAbogados : abogadosCollectionOld) {
+                if (!abogadosCollectionNew.contains(abogadosCollectionOldAbogados)) {
+                    abogadosCollectionOldAbogados.getCasosCollection().remove(casos);
+                    abogadosCollectionOldAbogados = em.merge(abogadosCollectionOldAbogados);
                 }
             }
-            for (Abogados abogadosListNewAbogados : abogadosListNew) {
-                if (!abogadosListOld.contains(abogadosListNewAbogados)) {
-                    abogadosListNewAbogados.getCasosList().add(casos);
-                    abogadosListNewAbogados = em.merge(abogadosListNewAbogados);
+            for (Abogados abogadosCollectionNewAbogados : abogadosCollectionNew) {
+                if (!abogadosCollectionOld.contains(abogadosCollectionNewAbogados)) {
+                    abogadosCollectionNewAbogados.getCasosCollection().add(casos);
+                    abogadosCollectionNewAbogados = em.merge(abogadosCollectionNewAbogados);
                 }
             }
             em.getTransaction().commit();
@@ -149,13 +150,13 @@ public class CasosJpaController implements Serializable {
             }
             Clientes clientedni = casos.getClientedni();
             if (clientedni != null) {
-                clientedni.getCasosList().remove(casos);
+                clientedni.getCasosCollection().remove(casos);
                 clientedni = em.merge(clientedni);
             }
-            List<Abogados> abogadosList = casos.getAbogadosList();
-            for (Abogados abogadosListAbogados : abogadosList) {
-                abogadosListAbogados.getCasosList().remove(casos);
-                abogadosListAbogados = em.merge(abogadosListAbogados);
+            Collection<Abogados> abogadosCollection = casos.getAbogadosCollection();
+            for (Abogados abogadosCollectionAbogados : abogadosCollection) {
+                abogadosCollectionAbogados.getCasosCollection().remove(casos);
+                abogadosCollectionAbogados = em.merge(abogadosCollectionAbogados);
             }
             em.remove(casos);
             em.getTransaction().commit();

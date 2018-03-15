@@ -10,9 +10,9 @@ package UML;
  * @author Jon
  */
 public class Persona {
-    String  nombre, apellidos, dni, direccion, telefono;
-    int     edad;
-    Empresa empresa;
+    private String  nombre, apellidos, dni, direccion, telefono;
+    private int     edad;
+    private Empresa empresa;
 
     public Persona() {
     }

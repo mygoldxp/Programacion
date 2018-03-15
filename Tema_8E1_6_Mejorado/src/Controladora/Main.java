@@ -8,8 +8,8 @@ package Controladora;
 import GUI.*;
 import MBD.*;
 import UML.*;
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -83,12 +83,12 @@ public class Main {
         return listadoEvento.get(0);
     }
     
-    public static void añadir(String nombre, String lugar, Time hEntrada, Time hSalida, Date fecha, int aforo) throws Exception{
+    public static void añadir(String nombre, String lugar, LocalTime hEntrada, LocalTime hSalida, Date fecha, int aforo) throws Exception{
         ev = new Evento(nombre, lugar, hEntrada, hSalida, fecha, aforo);
         eventoBBDD.añadir(ev);
     }
     
-    public static void modificar(String nombre, String lugar, Time hEntrada, Time hSalida, Date fecha, int aforo) throws Exception{
+    public static void modificar(String nombre, String lugar, LocalTime hEntrada, LocalTime hSalida, Date fecha, int aforo) throws Exception{
         ev = new Evento(nombre, lugar, hEntrada, hSalida, fecha, aforo);
         eventoBBDD.modificar(ev);
     }

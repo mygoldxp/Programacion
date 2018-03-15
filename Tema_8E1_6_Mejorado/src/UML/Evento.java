@@ -5,8 +5,9 @@
  */
 package UML;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
+import java.time.LocalTime;
+
 
 
 /**
@@ -14,15 +15,15 @@ import java.sql.Time;
  * @author v6222
  */
 public class Evento {
-    String  nombre, lugar;
-    Time hEntrada, hSalida;
-    Date fecha;
-    int     aforo;
+    private String  nombre, lugar;
+    private LocalTime hEntrada, hSalida;
+    private Date fecha;
+    private int     aforo;
 
     public Evento() {
     }
 
-    public Evento(String nombre, String lugar, Time hEntrada, Time hSalida, Date fecha, int aforo) {
+    public Evento(String nombre, String lugar, LocalTime hEntrada, LocalTime hSalida, Date fecha, int aforo) {
         this.nombre = nombre;
         this.lugar = lugar;
         this.hEntrada = hEntrada;
@@ -57,19 +58,19 @@ public class Evento {
     }
 
 
-    public Time gethEntrada() {
+    public LocalTime gethEntrada() {
         return hEntrada;
     }
 
-    public void sethEntrada(Time hEntrada) {
+    public void sethEntrada(LocalTime hEntrada) {
         this.hEntrada = hEntrada;
     }
 
-    public Time gethSalida() {
+    public LocalTime gethSalida() {
         return hSalida;
     }
 
-    public void sethSalida(Time hSalida) {
+    public void sethSalida(LocalTime hSalida) {
         this.hSalida = hSalida;
     }
 

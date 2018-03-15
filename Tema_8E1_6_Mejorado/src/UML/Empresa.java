@@ -11,7 +11,7 @@ package UML;
  */
 public class Empresa {
     
-    String cif, nombre, direccion, telefono;
+    private String cif, nombre, direccion, telefono;
 
     public Empresa() {
     }

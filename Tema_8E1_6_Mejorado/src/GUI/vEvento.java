@@ -9,7 +9,7 @@ import Controladora.Main;
 import Excepcion.Error;
 import UML.*;
 import java.awt.Color;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
@@ -531,9 +531,8 @@ public class vEvento extends javax.swing.JDialog {
         Main.cerrar(this);
     }//GEN-LAST:event_bCancelarActionPerformed
 
-    private Time oHora(String hora, String minuto){
-        String horario = hora + ":" + minuto + ":00";
-        return Time.valueOf(horario);
+    private LocalTime oHora(String hora, String minuto){
+        return LocalTime.of(Integer.parseInt(hora), Integer.parseInt(minuto));
     }
     
     private java.sql.Date oFecha(Date fecha){
@@ -543,7 +542,7 @@ public class vEvento extends javax.swing.JDialog {
     }
     
     private void aceptarOP1() throws Exception{
-        Time horaI, horaF;
+        LocalTime horaI, horaF;
         validar(1, tEvento,"^[A-Z][a-z0-9 ]+$");
         validar(2, tLugar,"^[A-Z][a-z0-9 ]+$");
         validar(3, tPlaza,"^[0-9]+$");
@@ -561,7 +560,7 @@ public class vEvento extends javax.swing.JDialog {
     }
     
     private void aceptarOP2() throws Exception{
-        Time horaI, horaF;
+        LocalTime horaI, horaF;
         validar(1, tEvento,"^[A-Z][a-z0-9 ]+$");
         validar(2, tLugar,"^[A-Z][a-z0-9 ]+$");
         validar(3, tPlaza,"^[0-9]+$");
@@ -850,11 +849,11 @@ public class vEvento extends javax.swing.JDialog {
         cFMinuto.setSelectedItem(minuto(ev.gethSalida()));
     }
     
-    private String hora(Time h){
+    private String hora(LocalTime h){
         return h.toString().substring(0, 2);
     }
     
-    private String minuto(Time h){
+    private String minuto(LocalTime h){
         return h.toString().substring(3, 5);
     }
     

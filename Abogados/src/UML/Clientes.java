@@ -6,7 +6,7 @@
 package UML;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,7 +57,7 @@ public class Clientes implements Serializable {
     @Column(name = "tel")
     private String tel;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientedni")
-    private List<Casos> casosList;
+    private Collection<Casos> casosCollection;
 
     public Clientes() {
     }
@@ -124,12 +124,12 @@ public class Clientes implements Serializable {
     }
 
     @XmlTransient
-    public List<Casos> getCasosList() {
-        return casosList;
+    public Collection<Casos> getCasosCollection() {
+        return casosCollection;
     }
 
-    public void setCasosList(List<Casos> casosList) {
-        this.casosList = casosList;
+    public void setCasosCollection(Collection<Casos> casosCollection) {
+        this.casosCollection = casosCollection;
     }
 
     @Override

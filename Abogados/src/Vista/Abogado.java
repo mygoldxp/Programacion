@@ -64,6 +64,14 @@ public class Abogado extends javax.swing.JDialog {
 
         jLabel1.setText("DNI:");
 
+        tNombre.setEnabled(false);
+
+        tApe1.setEnabled(false);
+
+        tApe2.setEnabled(false);
+
+        tDireccion.setEnabled(false);
+
         jLabel2.setText("Nombre:");
 
         jLabel3.setText("Apellido 1:");
@@ -161,10 +169,21 @@ public class Abogado extends javax.swing.JDialog {
                         
             if(bAceptar.getText().equals("Consultar")){
                 Abogados abo = Main.consultarAbogado(tDNI.getText());
-                if(abo.equals(null)){
-                    agregarAbogado();
+                
+                if(abo == null){
+                    habilitarAbogado();
+                    bAceptar.setText("Añadir");
                 }
                 else{
+                    if(n == 2){
+                        llenarDatos(abo);
+                        bAceptar.setText("Eliminar");
+                    }
+                    else{
+                        habilitarAbogado();
+                        llenarDatos(abo);
+                        bAceptar.setText("Modificar");
+                    }
                     
                 }
             }
@@ -174,9 +193,22 @@ public class Abogado extends javax.swing.JDialog {
                 validar(2, tApe2, "^[A-Z][a-z]{2,}$");
                 validar(3, tDireccion, "^[A-Z][a-z]{2,}([ a-z])*$");
                 
-                Main.crearAbogado(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText());
+                if(bAceptar.getText().equals("Añadir")){
+                    Main.crearAbogado(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText());
+                    JOptionPane.showMessageDialog(this, "Abogado añadido correctamente.");
+                    Main.cerrar(this);
+                }
+                else if(bAceptar.getText().equals("Eliminar")){
+                    Main.eliminarAbogado(tDNI.getText());
+                    JOptionPane.showMessageDialog(this, "Abogado eliminado correctamente.");
+                    Main.cerrar(this);
+                }
+                else{
+                    Main.modificarAbogado(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText());
+                    JOptionPane.showMessageDialog(this, "Abogado modificado correctamente.");
+                    Main.cerrar(this);
+                }
                 
-                JOptionPane.showMessageDialog(this, "Abogado añadido correctamente.");
             }
             
             
@@ -202,6 +234,20 @@ public class Abogado extends javax.swing.JDialog {
         }
     }
     
+    private void habilitarAbogado(){
+        tDNI.setEnabled(false);
+        tNombre.setEnabled(true);
+        tApe1.setEnabled(true);
+        tApe2.setEnabled(true);
+        tDireccion.setEnabled(true);
+    }
+    
+    private void llenarDatos(Abogados abo){
+        tNombre.setText(abo.getNombre());
+        tApe1.setText(abo.getApe1());
+        tApe2.setText(abo.getApe2());
+        tDireccion.setText(abo.getDir());
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar;

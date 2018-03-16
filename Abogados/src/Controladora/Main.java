@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import UBD.*;
 import UML.*;
 import Vista.*;
+import javax.swing.JDialog;
 
 /**
  *
@@ -80,6 +81,23 @@ public class Main {
         abo = new Abogados(dni, nombre, ape1, ape2, dir);
         abogadoBD.create(abo);
         
+    }
+    
+    public static void modificarAbogado(String dni, String nombre, String ape1, String ape2, String dir) throws Exception{
+        
+        abo = new Abogados(dni, nombre, ape1, ape2, dir);
+        abogadoBD.edit(abo);
+        
+    }
+    
+    public static void eliminarAbogado(String dni) throws Exception{
+        
+        abogadoBD.destroy(dni);
+        
+    }
+    
+    public static void cerrar(JDialog dato){
+        dato.dispose();
     }
     
     public static void main(String[] args) throws Exception {

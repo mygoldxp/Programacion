@@ -5,6 +5,18 @@
  */
 package Vista;
 
+import Controladora.Main;
+import UML.Clientes;
+import Errores.Error;
+import UML.Casos;
+import java.awt.Color;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import org.freixas.jcalendar.JCalendarCombo;
+
 /**
  *
  * @author v6222
@@ -12,6 +24,7 @@ package Vista;
 public class Caso extends javax.swing.JDialog {
 
     int n;
+    Date fechaHoy;
     /**
      * Creates new form Caso
      */
@@ -26,6 +39,9 @@ public class Caso extends javax.swing.JDialog {
         setModal(true);
         this.setLocationRelativeTo(null);
         setVisible(true);
+        fechaHoy = cFechaI.getDate();
+        JOptionPane.showMessageDialog(this, cFechaI.getDate());
+        cFechaF.setSelectedIndex(-1);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,15 +55,15 @@ public class Caso extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        tDNI = new javax.swing.JTextField();
+        tNumero = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         bAceptar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
-        tApe2 = new javax.swing.JTextField();
-        tDireccion = new javax.swing.JTextField();
+        tEstado = new javax.swing.JTextField();
+        tDNI = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jCalendarCombo1 = new org.freixas.jcalendar.JCalendarCombo();
-        jCalendarCombo2 = new org.freixas.jcalendar.JCalendarCombo();
+        cFechaI = new org.freixas.jcalendar.JCalendarCombo();
+        cFechaF = new org.freixas.jcalendar.JCalendarCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Caso"); // NOI18N
@@ -60,11 +76,29 @@ public class Caso extends javax.swing.JDialog {
 
         jLabel1.setText("Número:");
 
-        bAceptar.setText("Aceptar");
+        bAceptar.setText("Consultar");
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAceptarActionPerformed(evt);
+            }
+        });
 
         bCancelar.setText("Cancelar");
 
+        tEstado.setEnabled(false);
+
+        tDNI.setEnabled(false);
+
         jLabel2.setText("Fecha Inicio:");
+
+        cFechaI.setEditable(true);
+        cFechaI.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "martes 20 de marzo de 2018" }));
+        cFechaI.setEnabled(false);
+
+        cFechaF.setEditable(true);
+        cFechaF.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "martes 20 de marzo de 2018" }));
+        cFechaF.setSelectedIndex(-1);
+        cFechaF.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,7 +109,7 @@ public class Caso extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                         .addComponent(bCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,11 +120,11 @@ public class Caso extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tApe2)
-                            .addComponent(tDNI)
-                            .addComponent(jCalendarCombo1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                            .addComponent(jCalendarCombo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tDireccion))
+                            .addComponent(tEstado)
+                            .addComponent(tNumero)
+                            .addComponent(cFechaI, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                            .addComponent(cFechaF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tDNI))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -99,23 +133,23 @@ public class Caso extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jCalendarCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jCalendarCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tApe2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -127,6 +161,125 @@ public class Caso extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
+        // TODO add your handling code here:
+        try{
+            validar(1, tNumero, "^[0-9]{1,5}$");
+                        
+            if(bAceptar.getText().equals("Consultar")){
+                Casos caso = Main.consultarCaso(tNumero.getText());
+                
+                if(caso == null){
+                    habilitarCliente();
+                    bAceptar.setText("Añadir");
+                }
+                else{
+                    if(n == 2){
+                        llenarDatos(caso);
+                        bAceptar.setText("Eliminar");
+                    }
+                    else{
+                        habilitarCliente();
+                        cFechaF.setEnabled(true);
+                        llenarDatos(caso);
+                        bAceptar.setText("Modificar");
+                    }
+                    
+                }
+            }
+            else{
+                validar(5, tEstado, "^[A-Z]{1}$");
+                validar(1, tDNI, "^[0-9]{8}[A-Z]$");
+                JOptionPane.showMessageDialog(this, fechaHoy);
+                validarFecha(9, fechaHoy, cFechaI);
+                validarFecha(9, cFechaI.getDate(), cFechaF);
+                if(bAceptar.getText().equals("Añadir")){
+                    cargarCliente(tDNI.getText());
+                    Main.crearCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
+                    JOptionPane.showMessageDialog(this, "Caso añadido correctamente.");
+                    Main.cerrar(this);
+                }
+                else if(bAceptar.getText().equals("Eliminar")){
+                    Main.eliminarCaso(tNumero.getText());
+                    JOptionPane.showMessageDialog(this, "Caso eliminado correctamente.");
+                    Main.cerrar(this);
+                }
+                else{
+                    cargarCliente(tDNI.getText());
+                    Main.modificarCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
+                    JOptionPane.showMessageDialog(this, "Caso modificado correctamente.");
+                    Main.cerrar(this);
+                }
+                
+            }
+            
+        }
+        catch(Errores.Error e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        catch(Exception ee){
+            JOptionPane.showMessageDialog(this, ee.getClass());
+        }
+    }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void validar(int error, JTextField dato, String patron) throws Exception{
+        Pattern p = Pattern.compile(patron);
+        Matcher m = p.matcher(dato.getText());
+        if(m.matches()){
+            dato.setBackground(Color.white);
+        }
+        else{
+            dato.setBackground(Color.red);
+            dato.grabFocus();
+            throw new Error(error);
+        }
+    }
+    
+    private void validarFecha(int error, Date fechaI, JCalendarCombo fechaF) throws Exception{
+        if(fechaI.before(fechaF.getDate())){
+            fechaF.setBackground(Color.red);
+            fechaF.grabFocus();
+            throw new Error(error);
+        }
+        else{
+            fechaF.setBackground(Color.white);
+        }
+    }
+    
+    private void habilitarCliente(){
+        tNumero.setEnabled(false);
+        cFechaI.setEnabled(true);
+        cFechaF.setEnabled(true);
+        tEstado.setEnabled(true);
+        tDNI.setEnabled(true);
+    }
+    
+    private void llenarDatos(Casos caso){
+        tNumero.setText(caso.getNumExp());
+        tEstado.setText(caso.getEstado());
+        tDNI.setText(caso.getClientedni().getDni());
+        cFechaI.setDate(caso.getFechaI());
+        cFechaF.setDate(caso.getFechaF());
+        
+    }
+    
+    private void cargarCliente(String dni){
+        try{
+            Clientes clie = null;
+            clie = Main.consultarCliente(dni);
+            if(clie == null){
+                tDNI.setBackground(Color.red);
+                tDNI.grabFocus();
+                throw new Error(6);
+            }
+        }
+        catch(Error e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getClass());
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -134,15 +287,15 @@ public class Caso extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar;
-    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo1;
-    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo2;
+    private org.freixas.jcalendar.JCalendarCombo cFechaF;
+    private org.freixas.jcalendar.JCalendarCombo cFechaI;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField tApe2;
     private javax.swing.JTextField tDNI;
-    private javax.swing.JTextField tDireccion;
+    private javax.swing.JTextField tEstado;
+    private javax.swing.JTextField tNumero;
     // End of variables declaration//GEN-END:variables
 }

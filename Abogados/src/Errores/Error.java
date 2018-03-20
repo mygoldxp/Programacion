@@ -36,19 +36,19 @@ public class Error extends Exception{
             case 4: dato = "El Campo en Rojo es Obligatorio y tiene un formato: Numérico[N]: NNNNNNNNN";
                 break;
             
-            case 6: dato = "El Campo en Rojo es Obligatorio y tiene un formato: Es Obligatorio seleccionar un tipo de Contrato";
+            case 5: dato = "El Campo en Rojo es Obligatorio y tiene un formato: N, Es Obligatorio escriber una letra en mayúscula.";
                 break;
                 
-            case 7: dato = "El Campo en Rojo es Obligatorio y tiene un formato: Es Obligatorio seleccionar un tipo de Departamento";
+            case 6: dato = "El cliente no existe.";
                 break;
                 
-            case 8: dato = "El Campo en Rojo es Obligatorio y tiene un formato: La fecha no puede ser Inferior a la actual";
+            case 7: dato = "El Abogado no existe.";
                 break;
                
-            case 9: dato = "El Empleado YA EXISTE, DNI o NSS repetido.";
+            case 8: dato = "El Cliente no existe.";
                 break;
             
-            case 10: dato = "El empleado NO EXISTE o NO SE HA CARGADO SUS DATOS.";
+            case 9: dato = "La fecha Inicial no puede ser anterior a la fecha Final";
                 break;
                 
             case 11: dato = "El empleado NO EXISTE, búsque en el Listado de Empleados para introducir uno existente.";

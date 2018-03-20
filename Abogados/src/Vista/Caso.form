@@ -29,7 +29,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="bAceptar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="216" max="32767" attributes="0"/>
+                      <EmptySpace pref="206" max="32767" attributes="0"/>
                       <Component id="bCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -42,11 +42,11 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="tApe2" max="32767" attributes="0"/>
-                          <Component id="tDNI" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jCalendarCombo1" alignment="0" pref="285" max="32767" attributes="0"/>
-                          <Component id="jCalendarCombo2" max="32767" attributes="0"/>
-                          <Component id="tDireccion" max="32767" attributes="0"/>
+                          <Component id="tEstado" max="32767" attributes="0"/>
+                          <Component id="tNumero" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cFechaI" alignment="0" pref="285" max="32767" attributes="0"/>
+                          <Component id="cFechaF" max="32767" attributes="0"/>
+                          <Component id="tDNI" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
@@ -60,27 +60,27 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tDNI" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCalendarCombo1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cFechaI" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jCalendarCombo2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cFechaF" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tApe2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="tDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tDNI" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
         <Property name="text" type="java.lang.String" value="DNI Cliente:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tDNI">
+    <Component class="javax.swing.JTextField" name="tNumero">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -118,26 +118,54 @@
     </Component>
     <Component class="javax.swing.JButton" name="bAceptar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Aceptar"/>
+        <Property name="text" type="java.lang.String" value="Consultar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bAceptarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bCancelar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tApe2">
+    <Component class="javax.swing.JTextField" name="tEstado">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tDireccion">
+    <Component class="javax.swing.JTextField" name="tDNI">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fecha Inicio:"/>
       </Properties>
     </Component>
-    <Component class="org.freixas.jcalendar.JCalendarCombo" name="jCalendarCombo1">
+    <Component class="org.freixas.jcalendar.JCalendarCombo" name="cFechaI">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="martes 20 de marzo de 2018"/>
+          </StringArray>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
-    <Component class="org.freixas.jcalendar.JCalendarCombo" name="jCalendarCombo2">
+    <Component class="org.freixas.jcalendar.JCalendarCombo" name="cFechaF">
+      <Properties>
+        <Property name="editable" type="boolean" value="true"/>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="1">
+            <StringItem index="0" value="martes 20 de marzo de 2018"/>
+          </StringArray>
+        </Property>
+        <Property name="selectedIndex" type="int" value="-1"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -66,10 +66,12 @@ public class Casos implements Serializable {
         this.numExp = numExp;
     }
 
-    public Casos(String numExp, Date fechaI, String estado) {
+    public Casos(String numExp, Date fechaI, Date fechaF, String estado, Clientes cliente) {
         this.numExp = numExp;
         this.fechaI = fechaI;
+        this.fechaF = fechaF;
         this.estado = estado;
+        this.clientedni = cliente;
     }
 
     public String getNumExp() {

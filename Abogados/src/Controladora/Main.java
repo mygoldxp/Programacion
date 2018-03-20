@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import UBD.*;
 import UML.*;
 import Vista.*;
+import java.util.Date;
 import javax.swing.JDialog;
 
 /**
@@ -93,6 +94,58 @@ public class Main {
     public static void eliminarAbogado(String dni) throws Exception{
         
         abogadoBD.destroy(dni);
+        
+    }
+    
+    public static Clientes consultarCliente(String dni) throws Exception{
+        clie = null;
+        clie = clienteBD.findClientes(dni);
+        return clie;
+    }
+    
+    public static void crearCliente(String dni, String nombre, String ape1, String ape2, String dir, String tel) throws Exception{
+        
+        clie = new Clientes(dni, nombre, ape1, ape2, dir, tel);
+        clienteBD.create(clie);
+        
+    }
+    
+    public static void modificarCliente(String dni, String nombre, String ape1, String ape2, String dir, String tel) throws Exception{
+        
+        clie = new Clientes(dni, nombre, ape1, ape2, dir, tel);
+        clienteBD.edit(clie);
+        
+    }
+    
+    public static void eliminarCliente(String dni) throws Exception{
+        
+        clienteBD.destroy(dni);
+        
+    }
+    
+    public static Casos consultarCaso(String numero) throws Exception{
+        caso = null;
+        caso = casoBD.findCasos(numero);
+        return caso;
+    }
+    
+    public static void crearCaso(String numero, Date fechaI, Date fechaF, String estado) throws Exception{
+        
+        caso = new Casos(numero, fechaI, fechaF, estado, clie);
+        casoBD.create(caso);
+        
+    }
+    
+    public static void modificarCaso(String numero, Date fechaI, Date fechaF, String estado) throws Exception{
+        
+        caso = new Casos(numero, fechaI, fechaF, estado, clie);
+        casoBD.edit(caso);
+        
+    }
+    
+    public static void eliminarCaso(String numero) throws Exception{
+        
+        casoBD.destroy(numero);
         
     }
     

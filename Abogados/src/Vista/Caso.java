@@ -32,16 +32,16 @@ public class Caso extends javax.swing.JDialog {
         initComponents();
         this.n = n;
         setTitle(dato + this.getName());
-        adaptaciones(dato);
+        adaptaciones();
     }
 
-    public void adaptaciones(String dato){
+    public void adaptaciones(){
         setModal(true);
         this.setLocationRelativeTo(null);
-        setVisible(true);
+        
         fechaHoy = cFechaI.getDate();
-        JOptionPane.showMessageDialog(this, cFechaI.getDate());
         cFechaF.setSelectedIndex(-1);
+        setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -96,8 +96,6 @@ public class Caso extends javax.swing.JDialog {
         cFechaI.setEnabled(false);
 
         cFechaF.setEditable(true);
-        cFechaF.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "martes 20 de marzo de 2018" }));
-        cFechaF.setSelectedIndex(-1);
         cFechaF.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -190,9 +188,10 @@ public class Caso extends javax.swing.JDialog {
             else{
                 validar(5, tEstado, "^[A-Z]{1}$");
                 validar(1, tDNI, "^[0-9]{8}[A-Z]$");
-                JOptionPane.showMessageDialog(this, fechaHoy);
                 validarFecha(9, fechaHoy, cFechaI);
-                validarFecha(9, cFechaI.getDate(), cFechaF);
+                if(cFechaF == null){
+                    validarFecha(9, cFechaI.getDate(), cFechaF);
+                }
                 if(bAceptar.getText().equals("Añadir")){
                     cargarCliente(tDNI.getText());
                     Main.crearCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
@@ -263,23 +262,15 @@ public class Caso extends javax.swing.JDialog {
         
     }
     
-    private void cargarCliente(String dni){
-        try{
-            Clientes clie = null;
-            clie = Main.consultarCliente(dni);
-            if(clie == null){
-                tDNI.setBackground(Color.red);
-                tDNI.grabFocus();
-                throw new Error(6);
-            }
+    private void cargarCliente(String dni) throws Exception{
+        Clientes clie = null;
+        clie = Main.consultarCliente(dni);
+        if(clie == null){
+            tDNI.setBackground(Color.red);
+            tDNI.grabFocus();
+            throw new Error(6);
         }
-        catch(Error e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getClass());
-        }
-    }
+    }   
     /**
      * @param args the command line arguments
      */

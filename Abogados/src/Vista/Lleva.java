@@ -11,12 +11,14 @@ package Vista;
  */
 public class Lleva extends javax.swing.JDialog {
 
+    int n;
     /**
      * Creates new form Estado
      */
-    public Lleva() {
+    public Lleva(int n, String dato) {
         initComponents();
-        setTitle("Abogado Lleva Caso");
+        this.n = n;
+        setTitle(dato + this.getName());
         adaptaciones();
     }
 
@@ -51,22 +53,39 @@ public class Lleva extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Abogado y Caso");
+        setTitle("Abogado Lleva Caso");
         setName("Estado"); // NOI18N
 
         jLabel1.setText("Número:");
 
-        bAceptar.setText("Aceptar");
+        bAceptar.setText("Consultar");
+        bAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAceptarActionPerformed(evt);
+            }
+        });
 
         bCancelar.setText("Cancelar");
 
+        tApe2.setEnabled(false);
+
         jLabel3.setText("Fecha Fin:");
+
+        tDireccion.setEnabled(false);
 
         jLabel4.setText("Estado:");
 
         jLabel2.setText("Fecha Inicio:");
 
         jLabel5.setText("DNI Cliente:");
+
+        jCalendarCombo1.setEditable(true);
+        jCalendarCombo1.setEnabled(false);
+
+        jCalendarCombo2.setEditable(true);
+        jCalendarCombo2.setEnabled(false);
+
+        tAbogado.setEnabled(false);
 
         jLabel6.setText("DNI Abogado:");
 
@@ -79,7 +98,7 @@ public class Lleva extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
                         .addComponent(bCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,6 +155,11 @@ public class Lleva extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_bAceptarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;

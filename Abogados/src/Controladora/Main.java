@@ -11,6 +11,7 @@ import UML.*;
 import Vista.*;
 import java.util.Date;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -65,9 +66,9 @@ public class Main {
         
     }
     
-    public static void vProceso(){
+    public static void vProceso(int n){
         
-        new Lleva();
+        new Lleva(n, abrir(n));
         
     }
     
@@ -130,14 +131,12 @@ public class Main {
     }
     
     public static void crearCaso(String numero, Date fechaI, Date fechaF, String estado) throws Exception{
-        
         caso = new Casos(numero, fechaI, fechaF, estado, clie);
         casoBD.create(caso);
         
     }
     
     public static void modificarCaso(String numero, Date fechaI, Date fechaF, String estado) throws Exception{
-        
         caso = new Casos(numero, fechaI, fechaF, estado, clie);
         casoBD.edit(caso);
         

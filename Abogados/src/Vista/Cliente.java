@@ -28,10 +28,10 @@ public class Cliente extends javax.swing.JDialog {
         initComponents();
         this.n = n;
         setTitle(dato + this.getName());
-        adaptaciones(dato);
+        adaptaciones();
     }
 
-    public void adaptaciones(String dato){
+    public void adaptaciones(){
         setModal(true);
         this.setLocationRelativeTo(null);
         setVisible(true);

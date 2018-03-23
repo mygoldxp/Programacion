@@ -5,6 +5,7 @@
  */
 package UBD;
 
+import Controladora.Main;
 import UBD.exceptions.NonexistentEntityException;
 import UBD.exceptions.PreexistingEntityException;
 import UML.Abogados;
@@ -19,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -67,6 +69,24 @@ public class AbogadosJpaController implements Serializable {
         }
     }
 
+    public void editar(Abogados abogado){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            em.merge(abogado);
+            
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getClass());
+            
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
     public void edit(Abogados abogados) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -181,6 +201,33 @@ public class AbogadosJpaController implements Serializable {
             return ((Long) q.getSingleResult()).intValue();
         } finally {
             em.close();
+        }
+    }
+    
+    public ArrayList<Abogados> buscarListaAbogados(Abogados abo) throws Exception {
+
+        EntityManager em = getEntityManager();
+        ArrayList <Abogados> listaAbo = new ArrayList(); 
+        try {
+            Query q = em.createNativeQuery("SELECT * FROM abogados ");
+            //q.setParameter("ba", "11111111Q");
+            List <Abogados> results = q.getResultList();
+            
+            for(int x = 0; x< results.size(); x++){
+                
+                JOptionPane.showMessageDialog(null, results.get(x));
+                
+                Abogados ab = new Abogados(results.get(x).getDni().toString(), results.get(x).getNombre().toString(), results.get(x).getApe1().toString()
+                        , results.get(x).getApe2().toString(), results.get(x).getDir().toString());
+                listaAbo.add(ab);
+            }
+            
+            return listaAbo;
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
     }
     

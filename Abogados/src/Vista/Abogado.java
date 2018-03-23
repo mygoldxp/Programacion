@@ -27,7 +27,7 @@ public class Abogado extends javax.swing.JDialog {
     public Abogado(int n, String dato) {
         initComponents();
         this.n = n;
-        setTitle(dato + this.getName());
+        setTitle(dato + this.getTitle());
         adaptaciones();
     }
 
@@ -60,6 +60,7 @@ public class Abogado extends javax.swing.JDialog {
         bCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(" Abogado");
         setName("Abogado"); // NOI18N
 
         jLabel1.setText("DNI:");
@@ -90,6 +91,11 @@ public class Abogado extends javax.swing.JDialog {
         });
 
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,6 +231,11 @@ public class Abogado extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ee.getClass());
         }
     }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        Main.cerrar(this);
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     private void validar(int error, JTextField dato, String patron) throws Exception{
         Pattern p = Pattern.compile(patron);

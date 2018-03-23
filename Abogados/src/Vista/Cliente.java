@@ -27,7 +27,7 @@ public class Cliente extends javax.swing.JDialog {
     public Cliente(int n, String dato) {
         initComponents();
         this.n = n;
-        setTitle(dato + this.getName());
+        setTitle(dato + this.getTitle());
         adaptaciones();
     }
 
@@ -62,6 +62,7 @@ public class Cliente extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(" Cliente");
         setName("Cliente"); // NOI18N
 
         jLabel1.setText("DNI:");
@@ -92,6 +93,11 @@ public class Cliente extends javax.swing.JDialog {
         });
 
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
 
         tTelefono.setEnabled(false);
 
@@ -191,7 +197,7 @@ public class Cliente extends javax.swing.JDialog {
                 else{
                     if(n == 2){
                         if(clie == null){
-                            throw new Error(8);
+                            throw new Error(6);
                         }
                         else{
                             llenarDatos(clie);
@@ -241,6 +247,11 @@ public class Cliente extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ee.getClass());
         }
     }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        Main.cerrar(this);
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     private void validar(int error, JTextField dato, String patron) throws Exception{
         Pattern p = Pattern.compile(patron);

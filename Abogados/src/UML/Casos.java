@@ -65,6 +65,11 @@ public class Casos implements Serializable {
     public Casos(String numExp) {
         this.numExp = numExp;
     }
+    
+    public Casos(String numExp, String estado) {
+        this.numExp = numExp;
+        this.estado = estado;
+    }
 
     public Casos(String numExp, Date fechaI, Date fechaF, String estado, Clientes cliente) {
         this.numExp = numExp;

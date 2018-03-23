@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -73,6 +74,25 @@ public class ClientesJpaController implements Serializable {
         }
     }
 
+    public void editar(Clientes cliente){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            em.merge(cliente);
+            
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getClass());
+            
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
     public void edit(Clientes clientes) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {

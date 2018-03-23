@@ -31,7 +31,7 @@ public class Caso extends javax.swing.JDialog {
     public Caso(int n, String dato) {
         initComponents();
         this.n = n;
-        setTitle(dato + this.getName());
+        setTitle( dato + this.getTitle());
         adaptaciones();
     }
 
@@ -66,6 +66,7 @@ public class Caso extends javax.swing.JDialog {
         cFechaF = new org.freixas.jcalendar.JCalendarCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(" Caso");
         setName("Caso"); // NOI18N
 
         jLabel3.setText("Fecha Fin:");
@@ -84,6 +85,11 @@ public class Caso extends javax.swing.JDialog {
         });
 
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
 
         tEstado.setEnabled(false);
 
@@ -220,6 +226,11 @@ public class Caso extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ee.getClass());
         }
     }//GEN-LAST:event_bAceptarActionPerformed
+
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        Main.cerrar(this);
+    }//GEN-LAST:event_bCancelarActionPerformed
 
     private void validar(int error, JTextField dato, String patron) throws Exception{
         Pattern p = Pattern.compile(patron);

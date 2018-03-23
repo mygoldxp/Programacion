@@ -5,6 +5,16 @@
  */
 package Vista;
 
+import Controladora.Main;
+import javax.swing.JOptionPane;
+import Errores.Error;
+import UML.Abogados;
+import UML.Casos;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author v6222
@@ -12,18 +22,24 @@ package Vista;
 public class Lleva extends javax.swing.JDialog {
 
     int n;
+    Casos caso = null;
+    DefaultTableModel model;
     /**
      * Creates new form Estado
      */
     public Lleva(int n, String dato) {
         initComponents();
         this.n = n;
-        setTitle(dato + this.getName());
+        setTitle(dato + this.getTitle());
         adaptaciones();
     }
 
     public void adaptaciones(){
         setModal(true);
+        Object[] titulo = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Direccion"};
+	model = new DefaultTableModel();
+	model.setColumnIdentifiers(titulo);
+        tTablaAbogado.setModel(model);
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -40,20 +56,25 @@ public class Lleva extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         bAceptar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
-        tApe2 = new javax.swing.JTextField();
+        tEstado = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        tDireccion = new javax.swing.JTextField();
+        tCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCalendarCombo1 = new org.freixas.jcalendar.JCalendarCombo();
-        tDNI = new javax.swing.JTextField();
-        jCalendarCombo2 = new org.freixas.jcalendar.JCalendarCombo();
-        tAbogado = new javax.swing.JTextField();
+        cFechaI = new org.freixas.jcalendar.JCalendarCombo();
+        tNumero = new javax.swing.JTextField();
+        cFechaF = new org.freixas.jcalendar.JCalendarCombo();
+        jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        tAbogado = new javax.swing.JTextField();
+        bAnnadir = new javax.swing.JButton();
+        bEliminar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tTablaAbogado = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Abogado Lleva Caso");
+        setTitle(" Abogado Lleva Caso");
         setName("Estado"); // NOI18N
 
         jLabel1.setText("Número:");
@@ -66,12 +87,17 @@ public class Lleva extends javax.swing.JDialog {
         });
 
         bCancelar.setText("Cancelar");
+        bCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bCancelarActionPerformed(evt);
+            }
+        });
 
-        tApe2.setEnabled(false);
+        tEstado.setEnabled(false);
 
         jLabel3.setText("Fecha Fin:");
 
-        tDireccion.setEnabled(false);
+        tCliente.setEnabled(false);
 
         jLabel4.setText("Estado:");
 
@@ -79,102 +105,315 @@ public class Lleva extends javax.swing.JDialog {
 
         jLabel5.setText("DNI Cliente:");
 
-        jCalendarCombo1.setEditable(true);
-        jCalendarCombo1.setEnabled(false);
+        cFechaI.setEditable(true);
+        cFechaI.setEnabled(false);
 
-        jCalendarCombo2.setEditable(true);
-        jCalendarCombo2.setEnabled(false);
+        cFechaF.setEditable(true);
+        cFechaF.setEnabled(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Abogado"));
+
+        jLabel6.setText("DNI Abogado:");
 
         tAbogado.setEnabled(false);
 
-        jLabel6.setText("DNI Abogado:");
+        bAnnadir.setText("Añadir Abogado");
+        bAnnadir.setEnabled(false);
+        bAnnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAnnadirActionPerformed(evt);
+            }
+        });
+
+        bEliminar.setText("Eliminar Abogado");
+        bEliminar.setEnabled(false);
+        bEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEliminarActionPerformed(evt);
+            }
+        });
+
+        tTablaAbogado.setAutoCreateRowSorter(true);
+        tTablaAbogado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tTablaAbogado);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tAbogado))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(bAnnadir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bEliminar)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(tAbogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bAnnadir)
+                    .addComponent(bEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(bAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bCancelar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tAbogado)
-                            .addComponent(tApe2)
-                            .addComponent(tDNI)
-                            .addComponent(jCalendarCombo1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                            .addComponent(jCalendarCombo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tDireccion))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(47, 47, 47)
+                                .addComponent(tNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(24, 24, 24)
+                                .addComponent(cFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(37, 37, 37)
+                                .addComponent(cFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(54, 54, 54)
+                                .addComponent(tEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(29, 29, 29)
+                                .addComponent(tCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1))
+                    .addComponent(tNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2))
+                    .addComponent(cFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(cFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel4))
+                    .addComponent(tEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel5))
+                    .addComponent(tCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jCalendarCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jCalendarCombo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tApe2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tAbogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCancelar)
-                    .addComponent(bAceptar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                    .addComponent(bAceptar)
+                    .addComponent(bCancelar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cargarDato(){
+        cFechaI.setDate(caso.getFechaI());
+        cFechaF.setDate(caso.getFechaF());
+        tEstado.setText(caso.getEstado());
+        tCliente.setText(caso.getClientedni().getDni());
+    }
+    
+    private void cargarLista() throws Exception{
+        Main.consultarLlevar(caso);
+        ArrayList <Abogados> listaAbo = null;
+        listaAbo = Main.getListaAbogado();
+        if(listaAbo != null){
+            model.setRowCount(0);
+            for(Abogados abo : listaAbo){
+                Object[] fila = {abo.getDni(), abo.getNombre(), abo.getApe1(), abo.getApe2(), abo.getDir()};
+                model.addRow(fila);
+            }
+        }
+    }
+    
+    private void habilitar(){
+            cFechaI.setEnabled(true);
+            cFechaF.setEnabled(true);
+            tEstado.setEnabled(true);
+            tAbogado.setEnabled(true);
+            bEliminar.setEnabled(true);
+            bAnnadir.setEnabled(true);
+    }
+    
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
         // TODO add your handling code here:
+        try{
+            if(bAceptar.getText().equals("Consultar")){
+                caso = Main.consultarCaso(tNumero.getText());
+                if(caso != null){
+                    tNumero.setEnabled(false);
+                    cargarDato();
+                    cargarLista();
+                    if(n == 2){
+                        bAceptar.setText("Eliminar");
+                    }
+                    else{
+                        habilitar();
+                        bAceptar.setText("Aceptar");
+                    }
+                }
+                else{
+                    throw new Error(10);
+                }
+            }
+            else{
+                siguiente();
+            }
+        }
+        catch(Error e){
+            JOptionPane.showMessageDialog(this, e);
+        } catch (Exception ex) {
+            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_bAceptarActionPerformed
 
+    public void siguiente() throws Exception{
+         if(bAceptar.getText().equals("Aceptar")){
+            caso.setEstado(tEstado.getText());
+            caso.setFechaI(cFechaI.getDate());
+            caso.setFechaF(cFechaF.getDate());
+            Main.modificarCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
+            JOptionPane.showMessageDialog(this, "Caso Modificado Correctamente.");  
+        }
+        else{
+           
+        }
+    }
+    private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
+        // TODO add your handling code here:
+        Main.cerrar(this);
+    }//GEN-LAST:event_bCancelarActionPerformed
+
+    private void bAnnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAnnadirActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(Main.consultarAbogado(tAbogado.getText()) == null){
+                tAbogado.grabFocus();
+                throw new Error(7);
+                
+            }
+            else{
+                Main.annadirLlevarAbogado();
+                cargarLista();
+                tAbogado.setText("");
+            }
+            
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_bAnnadirActionPerformed
+
+    private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(Main.consultarAbogado(tAbogado.getText()) == null){
+                tAbogado.grabFocus();
+                throw new Error(7);
+            }
+            else{
+                boolean existe = true;
+                for(int x=0; x<tTablaAbogado.getRowCount() && existe; x++){
+                    if(tAbogado.getText().equals(tTablaAbogado.getValueAt(x, 0))){
+                    Main.eliminarLlevarAbogado();
+                    cargarLista();
+                    tAbogado.setText("");
+                    existe = false;
+                    }
+                }
+                if(existe){
+                    throw new Error(8);
+                }
+            }
+            
+        } catch (Error e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception ex) {
+            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_bEliminarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
+    private javax.swing.JButton bAnnadir;
     private javax.swing.JButton bCancelar;
-    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo1;
-    private org.freixas.jcalendar.JCalendarCombo jCalendarCombo2;
+    private javax.swing.JButton bEliminar;
+    private org.freixas.jcalendar.JCalendarCombo cFechaF;
+    private org.freixas.jcalendar.JCalendarCombo cFechaI;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField tAbogado;
-    private javax.swing.JTextField tApe2;
-    private javax.swing.JTextField tDNI;
-    private javax.swing.JTextField tDireccion;
+    private javax.swing.JTextField tCliente;
+    private javax.swing.JTextField tEstado;
+    private javax.swing.JTextField tNumero;
+    private javax.swing.JTable tTablaAbogado;
     // End of variables declaration//GEN-END:variables
 }

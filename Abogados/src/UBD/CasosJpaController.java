@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -77,6 +78,25 @@ public class CasosJpaController implements Serializable {
         }
     }
 
+    public void editar(Casos caso){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            em.merge(caso);
+            
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getClass());
+            
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    
     public void edit(Casos casos) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {

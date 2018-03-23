@@ -45,16 +45,16 @@ public class Error extends Exception{
             case 7: dato = "El Abogado no existe.";
                 break;
                
-            case 8: dato = "El Cliente no existe.";
+            case 8: dato = "El abogado no está en esta lista.";
                 break;
             
             case 9: dato = "La fecha Inicial no puede ser anterior a la fecha Final";
                 break;
                 
-            case 11: dato = "El empleado NO EXISTE, búsque en el Listado de Empleados para introducir uno existente.";
+            case 10: dato = "El caso NO EXISTE, búsque en el Listado de Casos para introducir uno existente.";
                 break;
                 
-            case 12: dato = "La Nómina NO EXISTE, búsque en el Listado de Nóminas para introducir uno existente.";
+            case 11: dato = "No Hay datos.";
                 break;
         }
         

@@ -25,6 +25,7 @@ public class Caso extends javax.swing.JDialog {
 
     int n;
     Date fechaHoy;
+    Casos caso;
     /**
      * Creates new form Caso
      */
@@ -38,7 +39,7 @@ public class Caso extends javax.swing.JDialog {
     public void adaptaciones(){
         setModal(true);
         this.setLocationRelativeTo(null);
-        
+        caso = null;
         fechaHoy = cFechaI.getDate();
         cFechaF.setSelectedIndex(-1);
         setVisible(true);
@@ -171,7 +172,7 @@ public class Caso extends javax.swing.JDialog {
             validar(1, tNumero, "^[0-9]{1,5}$");
                         
             if(bAceptar.getText().equals("Consultar")){
-                Casos caso = Main.consultarCaso(tNumero.getText());
+                caso = Main.consultarCaso(tNumero.getText());
                 
                 if(caso == null){
                     habilitarCliente();
@@ -211,7 +212,12 @@ public class Caso extends javax.swing.JDialog {
                 }
                 else{
                     cargarCliente(tDNI.getText());
-                    Main.modificarCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
+                    caso.setNumExp(tNumero.getText());
+                    caso.setFechaI(cFechaI.getDate());
+                    caso.setFechaF(cFechaF.getDate());
+                    caso.setEstado(tEstado.getText());
+                    Main.setCaso(caso);
+                    Main.modificarCaso();
                     JOptionPane.showMessageDialog(this, "Caso modificado correctamente.");
                     Main.cerrar(this);
                 }

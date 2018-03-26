@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<agenda>
+    <contacto>
+        <nombre>Ivan</nombre>
+        <apellidos>Tejada</apellidos>
+        <email>ivan@jemail.com</email>
+        <telefono>655655655</telefono>
+    </contacto>
+</agenda>

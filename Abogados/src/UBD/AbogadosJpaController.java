@@ -69,6 +69,7 @@ public class AbogadosJpaController implements Serializable {
         }
     }
 
+    /*
     public void editar(Abogados abogado){
         EntityManager em = null;
         try {
@@ -87,6 +88,9 @@ public class AbogadosJpaController implements Serializable {
             }
         }
     }
+    
+    */
+    
     public void edit(Abogados abogados) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -209,16 +213,18 @@ public class AbogadosJpaController implements Serializable {
         EntityManager em = getEntityManager();
         ArrayList <Abogados> listaAbo = new ArrayList(); 
         try {
-            Query q = em.createNativeQuery("SELECT * FROM abogados ");
-            //q.setParameter("ba", "11111111Q");
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Abogados.class));
+            Query q = em.createQuery("SELECT a FROM Abogados a WHERE a.dni like :dni and a.nombre like :nombre and a.ape1 like :ape1"
+                    + " and a.ape2 like :ape2 ");
+            q.setParameter("dni", "%" + abo.getDni()+ "%");
+            q.setParameter("nombre", "%" + abo.getNombre()+ "%");
+            q.setParameter("ape1", "%" + abo.getApe1()+ "%");
+            q.setParameter("ape2", "%" + abo.getApe2()+ "%");
+                        
             List <Abogados> results = q.getResultList();
             
-            for(int x = 0; x< results.size(); x++){
-                
-                JOptionPane.showMessageDialog(null, results.get(x));
-                
-                Abogados ab = new Abogados(results.get(x).getDni().toString(), results.get(x).getNombre().toString(), results.get(x).getApe1().toString()
-                        , results.get(x).getApe2().toString(), results.get(x).getDir().toString());
+            for(Abogados ab:results){
                 listaAbo.add(ab);
             }
             
@@ -230,5 +236,7 @@ public class AbogadosJpaController implements Serializable {
             }
         }
     }
+    
+       
     
 }

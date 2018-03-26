@@ -21,6 +21,7 @@ import UML.Clientes;
 public class Cliente extends javax.swing.JDialog {
 
     private int n;
+    private Clientes clie;
     /**
      * Creates new form Abogado
      */
@@ -33,6 +34,7 @@ public class Cliente extends javax.swing.JDialog {
 
     public void adaptaciones(){
         setModal(true);
+        clie = null;
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -188,7 +190,8 @@ public class Cliente extends javax.swing.JDialog {
             validar(1, tDNI, "^[0-9]{8}[A-Z]$");
                         
             if(bAceptar.getText().equals("Consultar")){
-                Clientes clie = Main.consultarCliente(tDNI.getText());
+                clie = null;
+                clie = Main.consultarCliente(tDNI.getText());
                 
                 if(clie == null & n == 1){
                     habilitarCliente();
@@ -201,6 +204,7 @@ public class Cliente extends javax.swing.JDialog {
                         }
                         else{
                             llenarDatos(clie);
+                            tDNI.setEnabled(false);
                             bAceptar.setText("Eliminar");
                         }
                         
@@ -231,7 +235,14 @@ public class Cliente extends javax.swing.JDialog {
                     Main.cerrar(this);
                 }
                 else{
-                    Main.modificarCliente(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText(), tTelefono.getText());
+                    clie.setDni(tDNI.getText());
+                    clie.setNombre(tNombre.getText());
+                    clie.setApe1(tApe1.getText());
+                    clie.setApe2(tApe2.getText());
+                    clie.setDir(tDireccion.getText());
+                    clie.setTel(tTelefono.getText());
+                    Main.setClie(clie);
+                    Main.modificarCliente();
                     JOptionPane.showMessageDialog(this, "Cliente modificado correctamente.");
                     Main.cerrar(this);
                 }

@@ -346,7 +346,7 @@ public class Buscar extends javax.swing.JDialog {
         if(lista != null){
             model.setRowCount(0);
             for(Casos caso : lista){
-                Object[] fila = {caso.getNumExp(), caso.getFechaI(), caso.getFechaF(), caso.getEstado(), caso.getClientedni()};
+                Object[] fila = {caso.getNumExp(), caso.getFechaI(), caso.getFechaF(), caso.getEstado(), caso.getClientedni().getDni()};
                 model.addRow(fila);
             }
         }

@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author v6222
  */
-public class Lleva extends javax.swing.JDialog {
+public class CasoAbogados extends javax.swing.JDialog {
 
     int n;
     Casos caso = null;
@@ -27,7 +27,7 @@ public class Lleva extends javax.swing.JDialog {
     /**
      * Creates new form Estado
      */
-    public Lleva(int n, String dato) {
+    public CasoAbogados(int n, String dato) {
         initComponents();
         this.n = n;
         setTitle(dato + this.getTitle());
@@ -271,12 +271,10 @@ public class Lleva extends javax.swing.JDialog {
     }
     
     private void cargarLista() throws Exception{
-        Main.consultarLlevar(caso);
-        ArrayList <Abogados> listaAbo = null;
-        listaAbo = Main.getListaAbogado();
-        if(listaAbo != null){
+        
+        if(caso.getAbogadosCollection() != null){
             model.setRowCount(0);
-            for(Abogados abo : listaAbo){
+            for(Abogados abo : caso.getAbogadosCollection()){
                 Object[] fila = {abo.getDni(), abo.getNombre(), abo.getApe1(), abo.getApe2(), abo.getDir()};
                 model.addRow(fila);
             }
@@ -320,7 +318,7 @@ public class Lleva extends javax.swing.JDialog {
         catch(Error e){
             JOptionPane.showMessageDialog(this, e);
         } catch (Exception ex) {
-            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasoAbogados.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -331,11 +329,15 @@ public class Lleva extends javax.swing.JDialog {
             caso.setEstado(tEstado.getText());
             caso.setFechaI(cFechaI.getDate());
             caso.setFechaF(cFechaF.getDate());
-            Main.modificarCaso(tNumero.getText(), cFechaI.getDate(), cFechaF.getDate(), tEstado.getText());
-            JOptionPane.showMessageDialog(this, "Caso Modificado Correctamente.");  
+            Main.setCaso(caso);
+            Main.modificarCasoSinCambiarClientes();
+            JOptionPane.showMessageDialog(this, "Caso Modificado Correctamente.");
+            Main.cerrar(this);
         }
         else{
-           
+            Main.eliminarCaso(caso.getNumExp());
+            JOptionPane.showMessageDialog(this, "Enlace Eliminado Correctamente.");
+            Main.cerrar(this);
         }
     }
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
@@ -346,13 +348,15 @@ public class Lleva extends javax.swing.JDialog {
     private void bAnnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAnnadirActionPerformed
         // TODO add your handling code here:
         try{
-            if(Main.consultarAbogado(tAbogado.getText()) == null){
+            Abogados abo = null;
+            abo = Main.consultarAbogado(tAbogado.getText());
+            if(abo == null){
                 tAbogado.grabFocus();
                 throw new Error(7);
                 
             }
             else{
-                Main.annadirLlevarAbogado();
+                caso.getAbogadosCollection().add(abo);
                 cargarLista();
                 tAbogado.setText("");
             }
@@ -360,7 +364,7 @@ public class Lleva extends javax.swing.JDialog {
         } catch (Error e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {
-            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasoAbogados.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -369,7 +373,9 @@ public class Lleva extends javax.swing.JDialog {
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
         // TODO add your handling code here:
         try{
-            if(Main.consultarAbogado(tAbogado.getText()) == null){
+            Abogados abo = null;
+            abo = Main.consultarAbogado(tAbogado.getText());
+            if(abo == null){
                 tAbogado.grabFocus();
                 throw new Error(7);
             }
@@ -377,10 +383,10 @@ public class Lleva extends javax.swing.JDialog {
                 boolean existe = true;
                 for(int x=0; x<tTablaAbogado.getRowCount() && existe; x++){
                     if(tAbogado.getText().equals(tTablaAbogado.getValueAt(x, 0))){
-                    Main.eliminarLlevarAbogado();
-                    cargarLista();
-                    tAbogado.setText("");
-                    existe = false;
+                        caso.getAbogadosCollection().remove(Main.consultarAbogado(tAbogado.getText()));
+                        cargarLista();
+                        tAbogado.setText("");
+                        existe = false;
                     }
                 }
                 if(existe){
@@ -391,7 +397,7 @@ public class Lleva extends javax.swing.JDialog {
         } catch (Error e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {
-            Logger.getLogger(Lleva.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CasoAbogados.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bEliminarActionPerformed
 

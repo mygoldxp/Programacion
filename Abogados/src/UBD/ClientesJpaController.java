@@ -227,4 +227,34 @@ public class ClientesJpaController implements Serializable {
         }
     }
     
+    
+    public ArrayList<Clientes> buscarListaClientes(Clientes clie) throws Exception {
+
+        EntityManager em = getEntityManager();
+        ArrayList <Clientes> listaClie = new ArrayList(); 
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Clientes.class));
+            Query q = em.createQuery("SELECT a FROM Clientes a WHERE a.dni like :dni and a.nombre like :nombre and a.ape1 like :ape1 and a.tel like :tel"
+                    + " and a.ape2 like :ape2 ");
+            q.setParameter("dni", "%" + clie.getDni()+ "%");
+            q.setParameter("nombre", "%" + clie.getNombre()+ "%");
+            q.setParameter("ape1", "%" + clie.getApe1()+ "%");
+            q.setParameter("ape2", "%" + clie.getApe2()+ "%");
+            q.setParameter("tel", "%" + clie.getTel()+ "%");        
+            
+            List <Clientes> results = q.getResultList();
+            
+            for(Clientes ab:results){
+                listaClie.add(ab);
+            }
+            
+            return listaClie;
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
 }

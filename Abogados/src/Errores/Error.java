@@ -56,6 +56,16 @@ public class Error extends Exception{
                 
             case 11: dato = "No Hay datos.";
                 break;
+                
+            case 12: dato = "El Abogado NO EXISTE, búsque en el Listado de Abogados para introducir uno existente.";
+                break;
+                
+            case 13: dato = "El Caso no existe.";
+                break;
+                
+            case 14: dato = "El abogado no está en esta lista.";
+                break;
+            
         }
         
         return dato;

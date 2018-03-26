@@ -21,6 +21,7 @@ import UML.Abogados;
 public class Abogado extends javax.swing.JDialog {
 
     private int n;
+    private Abogados abo;
     /**
      * Creates new form Abogado
      */
@@ -33,6 +34,7 @@ public class Abogado extends javax.swing.JDialog {
 
     public void adaptaciones(){
         setModal(true);
+        abo = null;
         this.setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -174,7 +176,8 @@ public class Abogado extends javax.swing.JDialog {
             validar(1, tDNI, "^[0-9]{8}[A-Z]$");
                         
             if(bAceptar.getText().equals("Consultar")){
-                Abogados abo = Main.consultarAbogado(tDNI.getText());
+                abo = null;
+                abo = Main.consultarAbogado(tDNI.getText());
                 
                 if(abo == null & n == 1){
                     habilitarAbogado();
@@ -187,6 +190,7 @@ public class Abogado extends javax.swing.JDialog {
                         }
                         else{
                             llenarDatos(abo);
+                            tDNI.setEnabled(false);
                             bAceptar.setText("Eliminar");
                         }
                     }
@@ -215,7 +219,13 @@ public class Abogado extends javax.swing.JDialog {
                     Main.cerrar(this);
                 }
                 else{
-                    Main.modificarAbogado(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText());
+                    abo.setDni(tDNI.getText());
+                    abo.setNombre(tNombre.getText());
+                    abo.setApe1(tApe1.getText());
+                    abo.setApe2(tApe2.getText());
+                    abo.setDir(tDireccion.getText());
+                    Main.setAbo(abo);
+                    Main.modificarAbogado();
                     JOptionPane.showMessageDialog(this, "Abogado modificado correctamente.");
                     Main.cerrar(this);
                 }

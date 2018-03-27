@@ -48,11 +48,8 @@ public class Buscar extends javax.swing.JDialog {
         lTelefono.setVisible(false);
         lExpediente.setVisible(false);
         lEstado.setVisible(false);
-        
 	model = new DefaultTableModel();
-	
-        
-        switch(n){
+	switch(n){
             case 1:
                 setTitle(this.getTitle() + " Abogados");
                 visible1();
@@ -78,9 +75,9 @@ public class Buscar extends javax.swing.JDialog {
                 model.setColumnIdentifiers(casos);
                 tTabla.setModel(model);
                 break;
+                
         }
         this.setLocationRelativeTo(null);
-        
         setVisible(true);
     }
 
@@ -94,14 +91,11 @@ public class Buscar extends javax.swing.JDialog {
         lNombre.setVisible(true);
         lApellido1.setVisible(true);
         lApellido2.setVisible(true);
-
     }
     
     private void visible2(){
-        
         tExpediente.setVisible(true);
         tEstado.setVisible(true);
-        
         lExpediente.setVisible(true);
         lEstado.setVisible(true);
     }
@@ -312,11 +306,9 @@ public class Buscar extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(Buscar.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
     }//GEN-LAST:event_bBuscarActionPerformed
 
     private void cAbogados(ArrayList <Abogados> lista) throws Exception{
-
         if(lista != null){
             model.setRowCount(0);
             for(Abogados abo : lista){

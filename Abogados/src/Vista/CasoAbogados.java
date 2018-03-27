@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import Errores.Error;
 import UML.Abogados;
 import UML.Casos;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class CasoAbogados extends javax.swing.JDialog {
 
     int n;
-    Casos caso = null;
+    Casos caso;
     DefaultTableModel model;
     /**
      * Creates new form Estado
@@ -36,6 +35,7 @@ public class CasoAbogados extends javax.swing.JDialog {
 
     public void adaptaciones(){
         setModal(true);
+        caso = null;
         Object[] titulo = {"DNI", "Nombre", "Apellido 1", "Apellido 2", "Direccion"};
 	model = new DefaultTableModel();
 	model.setColumnIdentifiers(titulo);
@@ -271,7 +271,6 @@ public class CasoAbogados extends javax.swing.JDialog {
     }
     
     private void cargarLista() throws Exception{
-        
         if(caso.getAbogadosCollection() != null){
             model.setRowCount(0);
             for(Abogados abo : caso.getAbogadosCollection()){
@@ -320,8 +319,6 @@ public class CasoAbogados extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(CasoAbogados.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }//GEN-LAST:event_bAceptarActionPerformed
 
     public void siguiente() throws Exception{
@@ -336,7 +333,7 @@ public class CasoAbogados extends javax.swing.JDialog {
         }
         else{
             Main.eliminarCaso(caso.getNumExp());
-            JOptionPane.showMessageDialog(this, "Enlace Eliminado Correctamente.");
+            JOptionPane.showMessageDialog(this, "Caso Eliminado con sus correspondientes abogados.");
             Main.cerrar(this);
         }
     }
@@ -353,7 +350,6 @@ public class CasoAbogados extends javax.swing.JDialog {
             if(abo == null){
                 tAbogado.grabFocus();
                 throw new Error(7);
-                
             }
             else{
                 caso.getAbogadosCollection().add(abo);
@@ -375,7 +371,7 @@ public class CasoAbogados extends javax.swing.JDialog {
         try{
             Abogados abo = null;
             abo = Main.consultarAbogado(tAbogado.getText());
-            if(abo == null){
+            if( abo == null){
                 tAbogado.grabFocus();
                 throw new Error(7);
             }
@@ -383,7 +379,7 @@ public class CasoAbogados extends javax.swing.JDialog {
                 boolean existe = true;
                 for(int x=0; x<tTablaAbogado.getRowCount() && existe; x++){
                     if(tAbogado.getText().equals(tTablaAbogado.getValueAt(x, 0))){
-                        caso.getAbogadosCollection().remove(Main.consultarAbogado(tAbogado.getText()));
+                        caso.getAbogadosCollection().remove(abo);
                         cargarLista();
                         tAbogado.setText("");
                         existe = false;

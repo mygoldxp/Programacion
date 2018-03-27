@@ -257,7 +257,6 @@ public class AbogadoCasos extends javax.swing.JDialog {
     }
     
     private void cargarLista() throws Exception{
-
         if(abo.getCasosCollection() != null){
             model.setRowCount(0);
             for(Casos caso : abo.getCasosCollection()){
@@ -268,7 +267,6 @@ public class AbogadoCasos extends javax.swing.JDialog {
     }
     
     private void habilitar(){
-            
             tCaso.setEnabled(true);
             bEliminar.setEnabled(true);
             bAnnadir.setEnabled(true);
@@ -321,7 +319,7 @@ public class AbogadoCasos extends javax.swing.JDialog {
         }
         else{
             Main.eliminarAbogado(abo.getDni());
-            JOptionPane.showMessageDialog(this, "Enlace Abogado con Caso Eliminado Correctamente.");
+            JOptionPane.showMessageDialog(this, "Abogado eliminado con sus Casos Correctamente.");
             Main.cerrar(this);
         }
     }
@@ -338,21 +336,17 @@ public class AbogadoCasos extends javax.swing.JDialog {
             if(caso == null){
                 tCaso.grabFocus();
                 throw new Error(13);
-                
             }
             else{
                 abo.getCasosCollection().add(caso);
                 cargarLista();
                 tCaso.setText("");
             }
-            
         } catch (Error e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {
             Logger.getLogger(AbogadoCasos.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
     }//GEN-LAST:event_bAnnadirActionPerformed
 
     private void bEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEliminarActionPerformed
@@ -368,7 +362,7 @@ public class AbogadoCasos extends javax.swing.JDialog {
                 boolean existe = true;
                 for(int x=0; x<tTablaCasos.getRowCount() && existe; x++){
                     if(tCaso.getText().equals(tTablaCasos.getValueAt(x, 0))){
-                        abo.getCasosCollection().remove(Main.consultarCaso(tCaso.getText()));
+                        abo.getCasosCollection().remove(caso);
                         cargarLista();
                         tCaso.setText("");
                         existe = false;
@@ -378,7 +372,6 @@ public class AbogadoCasos extends javax.swing.JDialog {
                     throw new Error(14);
                 }
             }
-            
         } catch (Error e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {

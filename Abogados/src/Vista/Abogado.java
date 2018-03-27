@@ -174,11 +174,9 @@ public class Abogado extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             validar(1, tDNI, "^[0-9]{8}[A-Z]$");
-                        
             if(bAceptar.getText().equals("Consultar")){
                 abo = null;
                 abo = Main.consultarAbogado(tDNI.getText());
-                
                 if(abo == null & n == 1){
                     habilitarAbogado();
                     bAceptar.setText("Añadir");
@@ -199,7 +197,6 @@ public class Abogado extends javax.swing.JDialog {
                         llenarDatos(abo);
                         bAceptar.setText("Modificar");
                     }
-                    
                 }
             }
             else{
@@ -207,7 +204,6 @@ public class Abogado extends javax.swing.JDialog {
                 validar(2, tApe1, "^[A-Z][a-z]{2,}$");
                 validar(2, tApe2, "^[A-Z][a-z]{2,}$");
                 validar(3, tDireccion, "^[A-Z][a-z]{2,}([ a-z])*$");
-                
                 if(bAceptar.getText().equals("Añadir")){
                     Main.crearAbogado(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText());
                     JOptionPane.showMessageDialog(this, "Abogado añadido correctamente.");
@@ -229,10 +225,7 @@ public class Abogado extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Abogado modificado correctamente.");
                     Main.cerrar(this);
                 }
-                
             }
-            
-            
         }
         catch(Error e){
             JOptionPane.showMessageDialog(this, e.getMessage());

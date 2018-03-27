@@ -188,11 +188,9 @@ public class Cliente extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             validar(1, tDNI, "^[0-9]{8}[A-Z]$");
-                        
             if(bAceptar.getText().equals("Consultar")){
                 clie = null;
                 clie = Main.consultarCliente(tDNI.getText());
-                
                 if(clie == null & n == 1){
                     habilitarCliente();
                     bAceptar.setText("Añadir");
@@ -207,14 +205,12 @@ public class Cliente extends javax.swing.JDialog {
                             tDNI.setEnabled(false);
                             bAceptar.setText("Eliminar");
                         }
-                        
                     }
                     else{
                         habilitarCliente();
                         llenarDatos(clie);
                         bAceptar.setText("Modificar");
                     }
-                    
                 }
             }
             else{
@@ -223,7 +219,6 @@ public class Cliente extends javax.swing.JDialog {
                 validar(2, tApe2, "^[A-Z][a-z]{1,}$");
                 validar(3, tDireccion, "^[A-Z][a-z]{2,}([ a-z])*$");
                 validar(4, tTelefono, "^[6-9][0-9]{8}$");
-                
                 if(bAceptar.getText().equals("Añadir")){
                     Main.crearCliente(tDNI.getText(), tNombre.getText(), tApe1.getText(), tApe2.getText(), tDireccion.getText(), tTelefono.getText());
                     JOptionPane.showMessageDialog(this, "Cliente añadido correctamente.");
@@ -246,10 +241,7 @@ public class Cliente extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Cliente modificado correctamente.");
                     Main.cerrar(this);
                 }
-                
             }
-            
-            
         }
         catch(Error e){
             JOptionPane.showMessageDialog(this, e.getMessage());

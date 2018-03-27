@@ -6,7 +6,6 @@
 package Vista;
 
 import Controladora.Main;
-import UML.Clientes;
 import Errores.Error;
 import UML.Casos;
 import java.awt.Color;
@@ -169,11 +168,9 @@ public class Caso extends javax.swing.JDialog {
     private void bAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAceptarActionPerformed
         // TODO add your handling code here:
         try{
-            validar(1, tNumero, "^[0-9]{1,5}$");
-                        
+            validar(1, tNumero, "^[0-9]{1,5}$"); 
             if(bAceptar.getText().equals("Consultar")){
                 caso = Main.consultarCaso(tNumero.getText());
-                
                 if(caso == null){
                     habilitarCliente();
                     bAceptar.setText("Añadir");
@@ -189,7 +186,6 @@ public class Caso extends javax.swing.JDialog {
                         llenarDatos(caso);
                         bAceptar.setText("Modificar");
                     }
-                    
                 }
             }
             else{
@@ -221,9 +217,7 @@ public class Caso extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Caso modificado correctamente.");
                     Main.cerrar(this);
                 }
-                
             }
-            
         }
         catch(Errores.Error e){
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -276,13 +270,10 @@ public class Caso extends javax.swing.JDialog {
         tDNI.setText(caso.getClientedni().getDni());
         cFechaI.setDate(caso.getFechaI());
         cFechaF.setDate(caso.getFechaF());
-        
     }
     
     private void cargarCliente(String dni) throws Exception{
-        Clientes clie = null;
-        clie = Main.consultarCliente(dni);
-        if(clie == null){
+        if(Main.consultarCliente(dni) == null){
             tDNI.setBackground(Color.red);
             tDNI.grabFocus();
             throw new Error(6);

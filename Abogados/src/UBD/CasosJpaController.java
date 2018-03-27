@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -77,28 +76,7 @@ public class CasosJpaController implements Serializable {
             }
         }
     }
-
-    /*
-    public void editar(Casos caso){
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            
-            em.merge(caso);
-            
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getClass());
-            
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
-    */
-    
+   
     public void edit(Casos casos) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -236,7 +214,6 @@ public class CasosJpaController implements Serializable {
     }
     
     public ArrayList<Casos> buscarListaCasos(Casos caso) throws Exception {
-
         EntityManager em = getEntityManager();
         ArrayList <Casos> listaCaso = new ArrayList(); 
         try {
@@ -245,20 +222,37 @@ public class CasosJpaController implements Serializable {
             Query q = em.createQuery("SELECT a FROM Casos a WHERE a.numExp like :exp and a.estado like :estado");
             q.setParameter("exp", "%" + caso.getNumExp()+ "%");
             q.setParameter("estado", "%" + caso.getEstado()+ "%");
-                        
             List <Casos> results = q.getResultList();
-            
             for(Casos ab:results){
                 listaCaso.add(ab);
             }
-            
             return listaCaso;
-
-        } finally {
+        }
+        finally {
             if (em != null) {
                 em.close();
             }
         }
     }
 
+    /*
+    public void editar(Casos caso){
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            
+            em.merge(caso);
+            
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getClass());
+            
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    */
 }

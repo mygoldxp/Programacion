@@ -227,9 +227,7 @@ public class ClientesJpaController implements Serializable {
         }
     }
     
-    
     public ArrayList<Clientes> buscarListaClientes(Clientes clie) throws Exception {
-
         EntityManager em = getEntityManager();
         ArrayList <Clientes> listaClie = new ArrayList(); 
         try {
@@ -242,16 +240,13 @@ public class ClientesJpaController implements Serializable {
             q.setParameter("ape1", "%" + clie.getApe1()+ "%");
             q.setParameter("ape2", "%" + clie.getApe2()+ "%");
             q.setParameter("tel", "%" + clie.getTel()+ "%");        
-            
             List <Clientes> results = q.getResultList();
-            
             for(Clientes ab:results){
                 listaClie.add(ab);
             }
-            
             return listaClie;
-
-        } finally {
+        } 
+        finally {
             if (em != null) {
                 em.close();
             }

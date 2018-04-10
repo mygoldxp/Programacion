@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<peliculas>
+    <pelicula categoria = "accion">
+        <titulo>Thor</titulo>
+        <director>Kubric</director>
+        <anyo>2015</anyo>
+        <duracion medida="min">120</duracion>
+    </pelicula>
+	<pelicula categoria = "terror">
+        <titulo>The Ring</titulo>
+        <director>Spielberg</director>
+        <anyo>2013</anyo>
+        <duracion medida="min">140</duracion>
+    </pelicula>
+	<pelicula categoria = "terror">
+        <titulo>Mixery</titulo>
+        <director>Stephen King</director>
+        <anyo>2013</anyo>
+        <duracion medida="min">140</duracion>
+    </pelicula>
+	<pelicula categoria = "comedia">
+        <titulo>5 bodas de más</titulo>
+        <director>Taratuto</director>
+        <anyo>2014</anyo>
+        <duracion medida="min">105</duracion>
+    </pelicula>
+</peliculas>

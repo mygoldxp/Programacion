@@ -16,6 +16,7 @@ import java.util.Date;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
+import Excepcion.Error;
 
 /**
  *
@@ -138,7 +139,7 @@ public class Main {
         ev = null;
         String dato = "";
         if(consultar(evento).getListadoPersonas().contains(p)){
-            dato = "La persona ya está apuntado en el evento.";
+            throw new Error(16);
         }
         else{
             ObjectSet result = db.queryByExample(new Evento(ev.getNombre(), null, null, null, null, 0));

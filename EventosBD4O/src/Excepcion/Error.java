@@ -80,6 +80,10 @@ public class Error extends Exception {
             case 15:
                 dato = "El evento no Existe.";
                 break;
+                
+            case 16:
+                dato = "La persona ya está apuntado en el evento.";
+                break;
         }
         return dato;
     }

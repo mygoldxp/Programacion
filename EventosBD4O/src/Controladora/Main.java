@@ -23,7 +23,6 @@ import Excepcion.Error;
  * @author v6222
  */
 public class Main {
-
     
     private static Evento ev;
     private static Empresa em;
@@ -35,16 +34,12 @@ public class Main {
      * @param args the command line arguments
      */
     
-    public static void main(String[] args){
-        // TODO code application logic here
-        //datos del servidor
-        
+    public static void main(String[] args){        
         Configuration configuracion = Db4o.newConfiguration();
         configuracion.objectClass(Evento.class).updateDepth(100);
         //configuracion.objectClass(Persona.class).updateDepth(20);
         //configuracion.objectClass(Empresa.class).updateDepth(20);
         db = Db4o.openFile(configuracion , "Eventos");
-
         new vMenu();
     }
 
@@ -126,7 +121,6 @@ public class Main {
             p = (Persona) result.next();
             existe = true;
         }
-        
         return existe;
     }
     
@@ -153,7 +147,6 @@ public class Main {
             int libres = ev.getAforo() - consultar(evento).getListadoPersonas().size();
             dato = "Plazas libre: " + String.valueOf(libres);
         }
-        
         return dato;
     }
     
@@ -170,9 +163,7 @@ public class Main {
                 dato += "-->" + per.getNombre() + ", " + per.getDni() + "\n";
                 }
             }
-            
         }
-       
         new vMostrar(dato);
     }
 

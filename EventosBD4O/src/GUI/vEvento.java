@@ -39,8 +39,8 @@ public class vEvento extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         pEmpresa.setVisible(false);
         pPersona.setVisible(false);
-        
         this.setSize(555, 225);
+        
         for(int x = 0; x<25; x++){
             String y = String.valueOf(x);
             if(x<10){
@@ -66,7 +66,6 @@ public class vEvento extends javax.swing.JDialog {
                 jListar.setEnabled(false);
                 mostrarBAlta();
                 bAceptar.setEnabled(true);
-                
                 break;
                 
             case 2:
@@ -89,7 +88,6 @@ public class vEvento extends javax.swing.JDialog {
     }
 
     private void mostrarBAlta(){
-        
         cFecha.setEnabled(true);
         tLugar.setEnabled(true);
         cIHora.setEnabled(true);
@@ -594,8 +592,8 @@ public class vEvento extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, Main.asistir(tEvento.getText()));
                     Main.reabrir(this,4);
                     break;
+                    
             }
-                
         }
         catch(Error e){
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -634,7 +632,6 @@ public class vEvento extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             Evento ev = Main.consultar(tEvento.getText());
-            
             if(ev == null){
                 throw new Error(15);
             }
@@ -644,26 +641,26 @@ public class vEvento extends javax.swing.JDialog {
                     case 1:
                         bAceptar.setEnabled(true);
                         break;
+                        
                     case 2:
                         mostrarBAlta();
                         cFecha.setVisible(true);
                         cargarDatos(ev);
                         bAceptar.setEnabled(true);
                         break;
+                        
                     case 3:
                         cargarDatos(ev);
                         bAceptar.setEnabled(true);
                         break;
+                        
                     case 4:
                         cargarDatos(ev);
                         pEmpresa.setVisible(true);
                         pPersona.setVisible(false);
                         this.setSize(555, 340);
                         break;
-                    default:
-                        break;
                 }
-                
             }
         }
         catch(Error e){
@@ -695,8 +692,6 @@ public class vEvento extends javax.swing.JDialog {
                 bInicio.setEnabled(true);
                 bAtras.setEnabled(true);
                 bFin.setEnabled(true);
-                
-            
         }
         catch(Error e){
             JOptionPane.showMessageDialog(this, e.getMessage());
@@ -708,31 +703,40 @@ public class vEvento extends javax.swing.JDialog {
 
     private void bInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bInicioActionPerformed
         // TODO add your handling code here:
-        cargarDatos(Main.moverEvento(0));
+        moverRegistro(0);
         JOptionPane.showMessageDialog(this, "El actual es el Primer registro.");
         
     }//GEN-LAST:event_bInicioActionPerformed
 
     private void bAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAtrasActionPerformed
         // TODO add your handling code here:
-        cargarDatos(Main.moverEvento(-1));
+        moverRegistro(-1);
     }//GEN-LAST:event_bAtrasActionPerformed
 
     private void bAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAdelanteActionPerformed
         // TODO add your handling code here:
-        cargarDatos(Main.moverEvento(1));
+        moverRegistro(1);
     }//GEN-LAST:event_bAdelanteActionPerformed
 
     private void bFinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFinActionPerformed
         // TODO add your handling code here:
-        cargarDatos(Main.moverEvento(-10));
+        moverRegistro(-10);
         JOptionPane.showMessageDialog(this, "El actual es el Último registro.");
     }//GEN-LAST:event_bFinActionPerformed
 
-    private void bEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpresaActionPerformed
-        // TODO add your handling code here:
+    private void moverRegistro(int n){
         try{
-            
+            cargarDatos(Main.moverEvento(n));
+        }
+        catch(Error e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        catch(Exception ee){
+            JOptionPane.showMessageDialog(this, ee.getClass());
+        }
+    }
+    private void bEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpresaActionPerformed
+        try{ 
         validar(12, tCIF,"^[A-Z][0-9]{8}$");
         tCIF.setEnabled(false);
         if(bEmpresa.getText().equals("Comprobar Empresa")){
@@ -786,7 +790,6 @@ public class vEvento extends javax.swing.JDialog {
             tDNI.setEnabled(false);
             
         if(bPersona.getText().equals("Comprobar Persona")){
-            
             if(!Main.consultarPersona(tDNI.getText())){
                 bPersona.setText("Añadir Persona");
                 enComun(true);
@@ -820,9 +823,7 @@ public class vEvento extends javax.swing.JDialog {
             validar(8, tDireccion, "^[A-Z][a-z0-9 ]+$");
             validar(9, tEdad, "^[0-9]{1,3}$");
             validar(10, tTelefono, "^[6-9][0-9]{8}$");
-            
             enComun(false);
-            //String dni, String nombre, String apellidos, String direccion, String telefono, int edad, String empresa
             Main.añadirPersona( tNombre.getText(), tApellidos.getText(), tDNI.getText(), tDireccion.getText(), 
                     tTelefono.getText(), Integer.parseInt(tEdad.getText()), tCIF.getText());
             bPersona.setEnabled(false);
@@ -841,7 +842,6 @@ public class vEvento extends javax.swing.JDialog {
         tEvento.setText(ev.getNombre());
         tLugar.setText(ev.getLugar());
         tPlaza.setText(String.valueOf(ev.getAforo()));
-        
         cFecha.setDate(ev.getFecha());
         cIHora.setSelectedItem(hora(ev.gethEntrada()));
         cIMinuto.setSelectedItem(minuto(ev.gethEntrada()));

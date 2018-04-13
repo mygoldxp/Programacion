@@ -735,6 +735,7 @@ public class vEvento extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ee.getClass());
         }
     }
+    
     private void bEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEmpresaActionPerformed
         try{ 
         validar(12, tCIF,"^[A-Z][0-9]{8}$");

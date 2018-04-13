@@ -156,7 +156,7 @@ public class vMenu extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             // TODO add your handling code here:
-            //Main.vMostrar();
+            Main.vMostrar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getClass());
         }

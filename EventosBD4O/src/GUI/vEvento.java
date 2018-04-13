@@ -591,7 +591,7 @@ public class vEvento extends javax.swing.JDialog {
                     break;
                     
                 case 4:
-                    //JOptionPane.showMessageDialog(this, Main.asistir(tEvento.getText()));
+                    JOptionPane.showMessageDialog(this, Main.asistir(tEvento.getText()));
                     Main.reabrir(this,4);
                     break;
             }

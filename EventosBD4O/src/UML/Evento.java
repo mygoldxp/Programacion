@@ -7,6 +7,7 @@ package UML;
 
 import java.util.Date;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +18,7 @@ public class Evento {
     private LocalTime hEntrada, hSalida;
     private Date fecha;
     private int     aforo;
+    private ArrayList <Persona> listadoPersonas;
 
     public Evento() {
     }
@@ -28,6 +30,7 @@ public class Evento {
         this.hSalida = hSalida;
         this.fecha = fecha;
         this.aforo = aforo;
+        listadoPersonas = new ArrayList();
     }
 
      
@@ -80,4 +83,15 @@ public class Evento {
         this.fecha = fecha;
     }
 
+    public ArrayList<Persona> getListadoPersonas() {
+        return listadoPersonas;
+    }
+
+    public void setListadoPersonas(Persona persona) {
+        listadoPersonas.add(persona);
+    }
+
+    public void setListadoPersonasCompleta(ArrayList<Persona> listadoCompleto){
+        this.listadoPersonas = listadoCompleto;
+    }
 }

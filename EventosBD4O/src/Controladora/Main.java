@@ -7,9 +7,10 @@ package Controladora;
 
 import GUI.*;
 import UML.*;
-import com.db4o.Db4o;
+import com.db4o.*;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.config.Configuration;
 import com.db4o.query.Query;
 import java.util.Date;
 import java.time.LocalTime;
@@ -36,7 +37,13 @@ public class Main {
     public static void main(String[] args){
         // TODO code application logic here
         //datos del servidor
-        db = Db4o.openFile("Eventos");
+        
+        Configuration configuracion = Db4o.newConfiguration();
+        configuracion.objectClass(Evento.class).updateDepth(100);
+        //configuracion.objectClass(Persona.class).updateDepth(20);
+        //configuracion.objectClass(Empresa.class).updateDepth(20);
+        db = Db4o.openFile(configuracion , "Eventos");
+
         new vMenu();
     }
 
@@ -129,27 +136,42 @@ public class Main {
     
     public static String asistir(String evento) throws Exception{
         ev = null;
-        ev = consultar(evento);
-        return asistirBBDD.añadir(p, ev);
+        String dato = "";
+        if(consultar(evento).getListadoPersonas().contains(p)){
+            dato = "La persona ya está apuntado en el evento.";
+        }
+        else{
+            ObjectSet result = db.queryByExample(new Evento(ev.getNombre(), null, null, null, null, 0));
+            Evento found = (Evento) result.next();
+            found.setListadoPersonas(p);
+            db.store(found);
+            
+            int libres = ev.getAforo() - consultar(evento).getListadoPersonas().size();
+            dato = String.valueOf(libres);
+        }
+        
+        return dato;
     }
     
     public static void vMostrar() throws Exception{
-        String dato = asistirBBDD.listado();
+        String dato = "Los datos de los eventos y sus asistentes son:\n";
+        recibirEvento();
+        for(Evento eve : listadoEvento){
+            dato += "\n" + eve.getNombre() + ":\n";
+            if(eve.getListadoPersonas().isEmpty()){
+                dato += "--> NO TIENE PERSONAS APUNTADAS.\n";
+            }
+            else{
+                for(Persona per : eve.getListadoPersonas()){
+                dato += "-->" + per.getNombre() + ", " + per.getDni() + "\n";
+                }
+            }
+            
+        }
+       
         new vMostrar(dato);
     }
-    
-    /* ELEMENTOS NO ENCONTRADOS
-    
-    
-    
-    
-    public static int consultarCodEvento(String nombreE) throws Exception{
-        return eventoBBDD.consultarCodEvento(nombreE);
-    }
-    
-    */
-    
-    
+
     // FUNCIONES DE VENTANAS
     
     public static void vEventos(int n){

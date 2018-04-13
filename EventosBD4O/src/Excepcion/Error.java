@@ -84,6 +84,14 @@ public class Error extends Exception {
             case 16:
                 dato = "La persona ya está apuntado en el evento.";
                 break;
+                
+            case 17:
+                dato = "No se ha apuntado a nadie, ya que el aforo está completo.";
+                break;
+                
+            case 18:
+                dato = "No hay más registros.";
+                break;
         }
         return dato;
     }

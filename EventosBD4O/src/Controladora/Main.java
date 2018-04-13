@@ -141,6 +141,9 @@ public class Main {
         if(consultar(evento).getListadoPersonas().contains(p)){
             throw new Error(16);
         }
+        else if(ev.getListadoPersonas().size()==ev.getAforo()){
+            throw new Error(17);
+        }
         else{
             ObjectSet result = db.queryByExample(new Evento(ev.getNombre(), null, null, null, null, 0));
             Evento found = (Evento) result.next();
@@ -148,7 +151,7 @@ public class Main {
             db.store(found);
             
             int libres = ev.getAforo() - consultar(evento).getListadoPersonas().size();
-            dato = String.valueOf(libres);
+            dato = "Plazas libre: " + String.valueOf(libres);
         }
         
         return dato;
@@ -160,7 +163,7 @@ public class Main {
         for(Evento eve : listadoEvento){
             dato += "\n" + eve.getNombre() + ":\n";
             if(eve.getListadoPersonas().isEmpty()){
-                dato += "--> NO TIENE PERSONAS APUNTADAS.\n";
+                dato += "--> NO HAY PERSONAS APUNTADAS.\n";
             }
             else{
                 for(Persona per : eve.getListadoPersonas()){
@@ -179,14 +182,14 @@ public class Main {
         new vEvento(n);
     }
     
-    public static Evento moverEvento(int nn){
+    public static Evento moverEvento(int nn) throws Exception{
         if(nn == 0){
             n = 0;
         }else if(nn == -10){
             n = listadoEvento.size()-1;
         }else{
             if((n + nn) < 0 || (n + nn) >= listadoEvento.size()){
-                JOptionPane.showMessageDialog(null, "No existe más registros.");
+                throw new Error(18);
             }
             else{
                 n +=nn;

@@ -1,0 +1,67 @@
+//linkear
+<link rel="stylesheet" href="../codigo/css/pregunta.css">
+
+//incluir javascript
+<script type="text/javascript" src="../codigo/js/pregunta/pregunta.js"></script>
+
+//Array asociativo
+$biblioteca = [
+	"00001" => ["autor" => "Ken Follet", "titulo" => "Los pilares de la tierra"],
+	"00002" => ["autor" => "Ken Follet", "titulo" => "El tercer gemelo"],
+	"00003" => ["autor" => "Ken Follet", "titulo" => "Un mundo sin fin"]
+];
+
+//Convierte un String separado por + en un array
+$numero = explode("+",$numeroTexto);
+
+//refresca la página
+header("refresh: 0;");
+// ir a una página con info GET
+header('Location: /pregunta/publicarPregunta.php?resultado=publicado&estado=muerto');
+$_GET["estado"];
+
+//cookies
+setcookies("usuario", "Jon", time() + 7*24*60*60);
+$_COOKIE["usuario"];
+setcookie("usuario", NULL, -1);
+
+//PDO
+$url = "localhost";
+$bbdd = "reto2"
+$user = "root";
+$pass = "";
+try{
+	$conexion = new PDO(mysql:host=$url;dbname=$bbdd, $user, $pass);
+}
+catch(PDOException $e){
+	echo "fallo " . $e->getMessage();
+}
+// PDO cerrar
+$conexion = null;
+// PDO
+function abrirConexion(){
+  $bd = "mysql:host=localhost;dbname=reto2;charset=utf8";
+  $usuario = "root";
+  $contrasenna = "";
+  return $conexion = new PDO($bd, $usuario, $contrasenna);
+}
+function realizarConsulta($query, $datos){
+  $conexion = abrirConexion();
+  $consulta = $conexion->prepare($query);
+  $consulta->execute($datos);
+  $conexion = null;
+  return $consulta;
+}
+//insert
+function insertarVoto($base, $dato, $tipoVoto){
+    realizarConsulta("INSERT INTO $base VALUES(:usuario, :idPreguntaRespuesta, :voto) ;", $dato);
+}
+//select
+function buscarVoto($base, $dato, $tipoVoto){
+    return realizarConsulta("SELECT idusuario FROM $base WHERE idusuario = :usuario and $tipoVoto = :idPreguntaRespuesta;", $dato)->fetch()[0];
+}
+// contar filas del select
+$consulta->?rowCount?();
+//fetch()
+->fetch()[0]; devuelve 1 objeto en array asociativo
+->fetchAll(); devuelve todo objeto en array asociativo
